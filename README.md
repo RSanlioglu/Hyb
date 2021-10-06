@@ -3,5 +3,4 @@ I dette repositoriet utvikles det en androiod-applikasjon for faget Mobilprogram
 
 ## Gruppemedlemmer:
 * Isak Bamiani
-* Vio Sambris
 * Ramazan Sanlioglu
