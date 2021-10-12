@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "861759648029",
+    "project_id": "hybfirebase",
+    "storage_bucket": "hybfirebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:861759648029:android:1bd933a7dedf8ee6cbf1f4",
+        "android_client_info": {
+          "package_name": "com.example.hyb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "861759648029-0l8tqthpdf1gqs2selrej79263j6ueqk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbm-OJK1WrtvxRzBrN3OJwL9_VSobP-WM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "861759648029-0l8tqthpdf1gqs2selrej79263j6ueqk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
