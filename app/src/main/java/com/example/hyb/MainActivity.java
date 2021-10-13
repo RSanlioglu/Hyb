@@ -33,6 +33,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             //start the second Activity
             this.startActivity(intent);
+        } else if(arg0.getId() == R.id.registerButton) {
+            Intent intent = new Intent(this, RegisterActivity.class);
+
+            this.startActivity(intent);
         }
 
     }

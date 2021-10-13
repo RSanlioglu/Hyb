@@ -47,7 +47,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.205"
-        android:autofillHints="" />
+        android:autofillHints="@id/editTextPassword" />
 
     <EditText
         android:id="@+id/editTextPasswordRegister"
@@ -55,6 +55,7 @@
         android:layout_height="53dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="352dp"
+        android:autofillHints="@string/password"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
@@ -77,7 +78,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPasswordRegister"
         app:layout_constraintVertical_bias="0.0"
-        android:autofillHints="" />
+        android:autofillHints="@string/first_name" />
 
     <EditText
         android:id="@+id/editTextLastName"
@@ -92,5 +93,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextFirstName"
         app:layout_constraintVertical_bias="0.0"
-        android:autofillHints="" />
+        android:autofillHints="@string/last_name" />
 </androidx.constraintlayout.widget.ConstraintLayout>
