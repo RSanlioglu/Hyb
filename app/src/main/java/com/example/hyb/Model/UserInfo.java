@@ -3,7 +3,7 @@ package com.example.hyb.Model;
 import java.util.Date;
 
 /**
- * Model for user. Does not containt login-info since firebase auth handles that
+ * Model for user. Does not contain login-info since firebase auth handles that
  */
 public class UserInfo {
     private String firstName;
@@ -58,5 +58,16 @@ public class UserInfo {
 
     public void setResidentId(String residentId) {
         this.residentId = residentId;
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber=" + phoneNumber +
+                ", birthDay=" + birthDay +
+                ", residentId='" + residentId + '\'' +
+                '}';
     }
 }
