@@ -59,4 +59,15 @@ public class UserInfo {
     public void setResidentId(String residentId) {
         this.residentId = residentId;
     }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber=" + phoneNumber +
+                ", birthDay=" + birthDay +
+                ", residentId='" + residentId + '\'' +
+                '}';
+    }
 }
