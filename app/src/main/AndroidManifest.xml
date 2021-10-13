@@ -25,10 +25,8 @@
 
             />
 
-        <activity
-            android:name=".RegisterActivity"
-            android:label="Register activity"
-        />
+
+
     </application>
 
 </manifest>
