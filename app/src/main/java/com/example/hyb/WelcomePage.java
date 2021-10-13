@@ -1,3 +1,2 @@
-package com.example.hyb;
-public class WelcomePage {
+package com.example.hyb;public class WlcomePage {
 }
