@@ -69,6 +69,5 @@ public class UserInfo {
                 ", birthDay=" + birthDay +
                 ", residentId='" + residentId + '\'' +
                 '}';
-
     }
 }
