@@ -16,6 +16,9 @@
         <argument
             android:name="userUid"
             app:argType="string" />
+        <action
+            android:id="@+id/action_selectJoinOrCreateRoom_to_registerRoomFragment"
+            app:destination="@id/registerRoomFragment" />
     </fragment>
     <fragment
         android:id="@+id/joinRoomFragment"
@@ -28,5 +31,16 @@
         <action
             android:id="@+id/action_joinRoomFragment_to_selectJoinOrCreateRoom"
             app:destination="@id/selectJoinOrCreateRoom" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerRoomFragment"
+        android:name="com.example.hyb.RegisterRoomFragment"
+        android:label="fragment_register_room"
+        tools:layout="@layout/fragment_register_room" >
+        <action
+            android:id="@+id/action_registerRoomFragment_to_selectJoinOrCreateRoom"
+            app:destination="@id/selectJoinOrCreateRoom" />
+        <argument android:name="userUid"
+            app:argType="string" />
     </fragment>
 </navigation>

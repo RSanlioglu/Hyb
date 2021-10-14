@@ -36,4 +36,7 @@
     <string name="join_or_create_a_new_room">Join or create a new room</string>
     <string name="join_a_room">Join a room</string>
     <string name="create_a_room">Create a room</string>
+    <string name="back">Back</string>
+    <string name="residentid">ResidentID</string>
+    <string name="join_a_resident">Join a resident</string>
 </resources>

@@ -35,6 +35,7 @@ public class SelectJoinOrCreateRoom extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         Button btnJoinRoom = view.findViewById(R.id.btnJoinRoom);
+        Button btnCreateRoom = view.findViewById(R.id.btnCreateRoom);
 
         btnJoinRoom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,5 +48,17 @@ public class SelectJoinOrCreateRoom extends Fragment {
 
             }
         });
+
+        btnCreateRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(view);
+                SelectJoinOrCreateRoomDirections.ActionSelectJoinOrCreateRoomToRegisterRoomFragment action = SelectJoinOrCreateRoomDirections.actionSelectJoinOrCreateRoomToRegisterRoomFragment(uidKey);
+
+                action.setUserUid(uidKey);
+                navController.navigate(action);
+            }
+        });
+
     }
 }
