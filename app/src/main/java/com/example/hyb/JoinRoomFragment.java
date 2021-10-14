@@ -8,12 +8,28 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.example.hyb.Model.Resident;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class JoinRoomFragment extends Fragment {
+    private final String TAG = "JOINROOMFRAGMENT";
+    private final String ERROR_MESSAGE = "No resident with such key does exist";
+    private FirebaseFirestore db;
+    private String uidKey;
 
     public JoinRoomFragment() {
 
@@ -22,6 +38,10 @@ public class JoinRoomFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+
+        db = FirebaseFirestore.getInstance();
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_join_room, container, false);
     }
@@ -30,15 +50,52 @@ public class JoinRoomFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        uidKey = getArguments().getString("userUid");
+
         Button btnBack = view.findViewById(R.id.btnBack);
+        Button btnJoin = view.findViewById(R.id.btnJoin);
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(view);
-                //TODO: Fiks userID
-                JoinRoomFragmentDirections.ActionJoinRoomFragmentToSelectJoinOrCreateRoom action = JoinRoomFragmentDirections.actionJoinRoomFragmentToSelectJoinOrCreateRoom("");
-                action.setUserUid("");
+
+                JoinRoomFragmentDirections.ActionJoinRoomFragmentToSelectJoinOrCreateRoom action = JoinRoomFragmentDirections.actionJoinRoomFragmentToSelectJoinOrCreateRoom(uidKey);
+                action.setUserUid(uidKey);
                 navController.navigate(action);
+            }
+        });
+
+        btnJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText residentKeyInput = view.findViewById(R.id.txtResidentID);
+                String residentKey = residentKeyInput.getText().toString();
+
+                DocumentReference resRef = db.collection("residents").document(residentKey);
+                resRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()) {
+                            DocumentSnapshot doc = task.getResult();
+                            if(doc.exists()) {
+                                Resident joinedResident = doc.toObject(Resident.class);
+                                joinedResident.addOccupants(uidKey);
+
+                                //Endrer residentKey på bruker
+                                DocumentReference userRef = db.collection("users").document(uidKey);
+                                userRef.update("residentId", residentKey);
+
+                                resRef.update("Occupants", FieldValue.arrayUnion(uidKey));
+                            } else {
+                                TextView txtOuptut = view.findViewById(R.id.txtOutput);
+                                txtOuptut.setText(ERROR_MESSAGE);
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
             }
         });
     }
