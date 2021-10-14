@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hyb">
         <activity
+            android:name=".LoginRegisterRoomActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -18,21 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".loginActivity"
-            android:label="Login Activity"
-
-            />
-
+            android:label="Login Activity" />
         <activity
             android:name=".RegisterActivity"
-            android:label="Register Activity"
-
-            />
-
-
-
+            android:label="Register Activity" />
 
     </application>
 

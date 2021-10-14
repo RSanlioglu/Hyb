@@ -9,15 +9,13 @@
         android:id="@+id/register_button"
         android:layout_width="156dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="260dp"
+        android:layout_marginBottom="228dp"
         android:onClick="onClick"
         android:text="@string/register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextLastName"
-        app:layout_constraintVertical_bias="0.521" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
@@ -85,6 +83,7 @@
         android:layout_width="225dp"
         android:layout_height="53dp"
         android:layout_marginTop="8dp"
+        android:autofillHints="@string/last_name"
         android:ems="10"
         android:hint="@string/last_name"
         android:inputType="textPersonName"
@@ -92,6 +91,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextFirstName"
-        app:layout_constraintVertical_bias="0.0"
-        android:autofillHints="@string/last_name" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/editTextPhone"
+        android:layout_width="225dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="8dp"
+        android:autofillHints="Phonenumber"
+        android:ems="10"
+        android:hint="Phonenumber"
+        android:inputType="phone"
+        app:layout_constraintBottom_toTopOf="@+id/register_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextLastName"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

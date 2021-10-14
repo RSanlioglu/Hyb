@@ -6,18 +6,32 @@ import java.util.Date;
  * Model for user. Does not containt login-info since firebase auth handles that
  */
 public class UserInfo {
+    private String Uid;
     private String firstName;
     private String lastName;
     private int phoneNumber;
     private Date birthDay;
     private String residentId;
 
-    public UserInfo(String firstName, String lastName, int phoneNumber, Date birthDay, String residentId) {
+    public UserInfo(String uid, String firstName, String lastName, int phoneNumber, Date birthDay, String residentId) {
+        this.Uid = uid;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.birthDay = birthDay;
         this.residentId = residentId;
+    }
+
+    public UserInfo() {
+
+    }
+
+    public String getUid() {
+        return Uid;
+    }
+
+    public void setUid(String uid) {
+        Uid = uid;
     }
 
     public String getFirstName() {
