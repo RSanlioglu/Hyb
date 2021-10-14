@@ -1,6 +1,8 @@
 package com.example.hyb;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,8 +20,7 @@ public class LoginRegisterRoomActivity extends AppCompatActivity {
         Intent receivedIntent = getIntent();
 
         String userinfo = receivedIntent.getStringExtra(RegisterActivity.KEY_NAME);
-
         TextView test = findViewById(R.id.txtUserUid);
-        test.setText(userinfo);
+        test.setText(userinfo);;
     }
 }

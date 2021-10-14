@@ -85,7 +85,6 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 UserInfo userInfo = documentSnapshot.toObject(UserInfo.class);
 
-                assert userInfo != null;
                 if(userInfo.getResidentId() == null) {
                     navigateToJoinCreateRoom(userId);
                 } else {
