@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hyb">
         <activity
+            android:name=".DashboardActivity"
+            android:exported="true" />
+        <activity
             android:name=".LoginRegisterRoomActivity"
             android:exported="true" />
         <activity
@@ -27,7 +30,6 @@
         <activity
             android:name=".RegisterActivity"
             android:label="Register Activity" />
-
     </application>
 
 </manifest>

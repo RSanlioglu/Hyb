@@ -84,7 +84,6 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 UserInfo userInfo = documentSnapshot.toObject(UserInfo.class);
-
                 if(userInfo.getResidentId() == null) {
                     navigateToJoinCreateRoom(userId);
                 } else {
@@ -101,6 +100,8 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void navigateToDashboard(String userId) {
-        Log.d(TAG, "navigateToDashboard: Brukeren har er med i et rom");
+       Intent intent = new Intent(this, DashboardActivity.class);
+       intent.putExtra(KEY_NAME, userId);
+       startActivity(intent);
     }
 }

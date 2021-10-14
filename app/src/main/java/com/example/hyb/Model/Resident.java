@@ -53,10 +53,6 @@ public class Resident {
         this.host = host;
     }
 
-    public ArrayList<String> getOccupants() {
-        return occupants;
-    }
-
     public void addOccupants(String userID) {
         occupants.add(userID);
     }
