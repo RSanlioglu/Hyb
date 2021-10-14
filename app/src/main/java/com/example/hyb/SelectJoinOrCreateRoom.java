@@ -24,7 +24,7 @@ public class SelectJoinOrCreateRoom extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        //uidKey = getArguments().getString("uidKey");
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_select_join_or_create_room, container, false);
 

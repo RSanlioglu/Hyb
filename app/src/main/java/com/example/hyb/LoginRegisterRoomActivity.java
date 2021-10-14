@@ -21,6 +21,6 @@ public class LoginRegisterRoomActivity extends AppCompatActivity {
 
         String userinfo = receivedIntent.getStringExtra(RegisterActivity.KEY_NAME);
         TextView test = findViewById(R.id.txtUserUid);
-        test.setText(userinfo);;
+        test.setText(userinfo);
     }
 }

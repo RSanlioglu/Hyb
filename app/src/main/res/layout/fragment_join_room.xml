@@ -15,7 +15,7 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment"
+            android:text="JOIN ROOM FUNCTION IS NOT YET IMPLEMENTED"
             app:layout_constraintBottom_toTopOf="@+id/btnBack"
             app:layout_constraintEnd_toEndOf="@+id/btnBack"
             app:layout_constraintStart_toStartOf="@+id/btnBack" />

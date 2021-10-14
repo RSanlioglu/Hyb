@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_selectJoinOrCreateRoom_to_joinRoomFragment"
             app:destination="@id/joinRoomFragment" />
+        <argument
+            android:name="userUid"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/joinRoomFragment"
@@ -22,5 +25,8 @@
         <argument
             android:name="userId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_joinRoomFragment_to_selectJoinOrCreateRoom"
+            app:destination="@id/selectJoinOrCreateRoom" />
     </fragment>
 </navigation>
