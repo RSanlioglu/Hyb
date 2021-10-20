@@ -1,9 +1,9 @@
 package com.example.hyb;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class DashboardActivity extends AppCompatActivity {
     public String userUid;
@@ -14,5 +14,6 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
         Intent receivedIntent = getIntent();
         userUid = receivedIntent.getStringExtra(RegisterActivity.KEY_NAME);
+
     }
 }
