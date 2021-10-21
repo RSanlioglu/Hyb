@@ -29,6 +29,7 @@ public class DashboardHomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ListView listView = (ListView) view.findViewById(R.id.listEvents);
 
+        //Mock liste med eventer. Byttes ut med event-objekter senere
         String[] events = new String[] {
                 "Event 1",
                 "Event 2",
