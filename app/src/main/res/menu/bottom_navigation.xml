@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/home"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/nav_event"
+        android:icon="@drawable/add"
+        android:title="Add event" />
+
+    <item
+        android:id="@+id/nav_calendar"
+        android:icon="@drawable/calendar"
+        android:title="Calendar" />
+
+    <item
+        android:id="@+id/nav_chat"
+        android:icon="@drawable/chat"
+        android:title="Chat" />
+
+    <item
+        android:id="@+id/nav_shoppList"
+        android:icon="@drawable/shopping"
+        android:title="Shoppinglist" />
+
+
+
+</menu>
