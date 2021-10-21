@@ -25,29 +25,44 @@ public class DashboardActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
         bottomNav.setOnItemSelectedListener(navListener);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, new DashboardHomeFragment()).commit();
+        //The default fragment is the dashboardHomeFragment
+        Fragment startFragment = new DashboardHomeFragment();
+        Bundle arguments = new Bundle();
+        arguments.putString("userId", userUid);
+        startFragment.setArguments(arguments);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, startFragment).commit();
     }
 
+    /**
+     * Listener that handles user input on navigation-bar
+     */
     private NavigationBarView.OnItemSelectedListener navListener = new NavigationBarView.OnItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFragment = null;
+            Bundle arguments = new Bundle();
+            arguments.putString("userId", userUid);
 
             switch (item.getItemId()) {
                 case R.id.nav_home:
                     selectedFragment = new DashboardHomeFragment();
+                    selectedFragment.setArguments(arguments);
                     break;
                 case R.id.nav_event:
                     selectedFragment = new AddEventFragment();
+                    selectedFragment.setArguments(arguments);
                     break;
                 case R.id.nav_calendar:
                     selectedFragment = new CalendarFragment();
+                    selectedFragment.setArguments(arguments);
                     break;
                 case R.id.nav_shoppList:
                     selectedFragment = new ShoppingListFragment();
+                    selectedFragment.setArguments(arguments);
                     break;
                 case R.id.nav_chat:
                     selectedFragment = new ChatDisplayFragment();
+                    selectedFragment.setArguments(arguments);
                     break;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, selectedFragment).commit();

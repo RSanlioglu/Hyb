@@ -39,4 +39,5 @@
     <string name="back">Back</string>
     <string name="residentid">ResidentID</string>
     <string name="join_a_resident">Join a resident</string>
+    <string name="upcoming_events">Upcoming events</string>
 </resources>
