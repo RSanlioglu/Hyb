@@ -40,4 +40,10 @@
     <string name="residentid">ResidentID</string>
     <string name="join_a_resident">Join a resident</string>
     <string name="upcoming_events">Upcoming events</string>
+    <!-- Create Housing Strings -->
+    <string name="ResidentName">Resident - name</string>
+    <string name="resident_address">Resident Address</string>
+    <string name="resident_city">Resident City</string>
+    <string name="resident_country">Resident Country</string>
+    <string name="createHousing">Create Housing</string>
 </resources>
