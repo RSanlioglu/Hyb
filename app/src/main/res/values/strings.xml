@@ -46,4 +46,14 @@
     <string name="resident_city">Resident City</string>
     <string name="resident_country">Resident Country</string>
     <string name="createHousing">Create Housing</string>
+    <!-- AddEvent fragment Strings -->
+    <string name="eventTitle">Event title</string>
+    <string name="eventLocation">Event location</string>
+    <string name="eventDescription">Event description</string>
+    <string name="createEvent">Create event</string>
+    <string name="SelectStartTime">select</string>
+    <string name="SelectEndTime">select</string>
+    <string name="eventStartTime">Start Date and Time</string>
+    <string name="eventEndTime">End Date and Time</string>
+
 </resources>

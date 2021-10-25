@@ -26,7 +26,8 @@
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/activity_login.xml" value="0.27355072463768115" />
         <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/activity_register.xml" value="0.21818181061547676" />
-        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/fragment_register_room.xml" value="0.1" />
+        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/fragment_add_event.xml" value="0.2558876811594203" />
+        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/fragment_register_room.xml" value="0.21818181061547676" />
       </map>
     </option>
   </component>

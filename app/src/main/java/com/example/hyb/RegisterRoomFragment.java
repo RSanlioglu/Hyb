@@ -34,7 +34,6 @@ public class RegisterRoomFragment extends Fragment {
     private final String TAG = "RegisterResidentFragment";
     private final String ERROR_MESSAGE = "Resident with this name already exists!";
     //declare Variables
-    private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private ArrayList<String> OccupantsList;
     public static final String KEY_NAME = "UserInfo";
@@ -61,6 +60,13 @@ public class RegisterRoomFragment extends Fragment {
         uidKey = getArguments().getString("userUid");
         Log.d(TAG, "onViewCreated: " +  uidKey);
 
+        //initial variables for input components
+        TextView txtOuptut = view.findViewById(R.id.txtOutput);
+        EditText residentNameInput = view.findViewById(R.id.ResidentName);
+        EditText residentAddressInput = view.findViewById(R.id.ResidentAddress);
+        EditText residentCityInput = view.findViewById(R.id.ResidentCity);
+        EditText residentCountryInput = view.findViewById(R.id.ResidentCountry);
+
         Button btnBack = view.findViewById(R.id.btnBackFromRegister);
         btnBack.setOnClickListener(new View.OnClickListener() {
 
@@ -80,12 +86,6 @@ public class RegisterRoomFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //initial variables for input components
-                TextView txtOuptut = view.findViewById(R.id.txtOutput);
-                EditText residentNameInput = view.findViewById(R.id.ResidentName);
-                EditText residentAddressInput = view.findViewById(R.id.ResidentAddress);
-                EditText residentCityInput = view.findViewById(R.id.ResidentCity);
-                EditText residentCountryInput = view.findViewById(R.id.ResidentCountry);
                 //Convert input dataTypes to String values
                 String residentName = residentNameInput.getText().toString();
                 String residentAddress = residentAddressInput.getText().toString();
