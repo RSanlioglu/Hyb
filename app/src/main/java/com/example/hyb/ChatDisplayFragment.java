@@ -1,5 +1,6 @@
 package com.example.hyb;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -96,8 +97,12 @@ public class ChatDisplayFragment extends Fragment {
                         public void onClick(View v) {
                             int position = chatUsersRecyclerView.getChildAdapterPosition(v);
                             UserInfo clickedUser = residentUsers.get(position);
-                            Toast.makeText(view.getContext(), clickedUser.getFirstName() + " clicked", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(view.getContext(), clickedUser.getFirstName() + " clicked", Toast.LENGTH_LONG).show();
                             //TODO: Når bruker har valgt bruker dem vil chatte med så skal chat aktiviteten vises og denne skal finishes.
+
+                            Intent intent = new Intent(view.getContext(), ChatActivity.class);
+                            intent.putExtra("userUid", clickedUser.getUid());
+                            view.getContext().startActivity(intent);
                         }
                     }));
 
