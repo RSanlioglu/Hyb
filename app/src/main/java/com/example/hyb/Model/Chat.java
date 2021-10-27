@@ -1,14 +1,21 @@
 package com.example.hyb.Model;
 
-public class Chat {
+import com.google.type.DateTime;
+
+import java.time.LocalDateTime;
+import java.util.Comparator;
+
+public class Chat implements Comparable<Chat>{
     private String sender;
     private String receiver;
     private String message;
+    private String sentDate;
 
-    public Chat(String sender, String receiver, String message) {
+    public Chat(String sender, String receiver, String message, String sentDate) {
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
+        this.sentDate = sentDate;
     }
 
     public Chat() {
@@ -37,5 +44,21 @@ public class Chat {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getSentDate() {
+        return sentDate;
+    }
+
+    public void setSentDate(String sentDate) {
+        this.sentDate = sentDate;
+    }
+
+    @Override
+    public int compareTo(Chat o) {
+        if(getSentDate() == null || o.getSentDate() == null) {
+            return 0;
+        }
+        return getSentDate().compareTo(o.getSentDate());
     }
 }

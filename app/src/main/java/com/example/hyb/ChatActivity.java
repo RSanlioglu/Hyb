@@ -1,6 +1,7 @@
 package com.example.hyb;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,11 +25,17 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -100,18 +107,26 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void sendMessage(String sender, String recevier, String message) {
+/*
         HashMap<String, Object> chatMap = new HashMap<>();
         chatMap.put("sender", sender);
         chatMap.put("receiver", recevier);
         chatMap.put("message", message);
+        chatMap.put("sendTime", LocalDateTime.now());
+*/
 
-        db.collection("chat").document().set(chatMap);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+
+        Chat createdChat = new Chat(sender, recevier, message, dtf.format(now));
+
+        db.collection("chat").document().set(createdChat);
         readMessages(senderUid, receiverUid);
     }
 
     private void readMessages(String senderUid, String receiverUid) {
         //TODO: TEST OM MELDINGENE BARE HENTES MELLOM WHEREEQUALTO TAGGENE!!!
-        db.collection("chat").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        /*db.collection("chat").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()) {
@@ -131,6 +146,30 @@ public class ChatActivity extends AppCompatActivity {
                 } else {
                     Log.d(TAG, "onComplete: " + task.getException());
                 }
+            }
+        });*/
+
+        db.collection("chat").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
+                if(e != null) {
+                    Log.w(TAG, "Listen failed ", e);
+                    return;
+                }
+                List<Chat> chats = new ArrayList<Chat>();
+                for(QueryDocumentSnapshot document:value) {
+                    Chat chat = document.toObject(Chat.class);
+                    if(chat.getReceiver().equals(senderUid) && chat.getSender().equals(receiverUid) ||
+                            chat.getReceiver().equals(receiverUid) && chat.getSender().equals(senderUid)) {
+                        chats.add(chat);
+                        Log.d(TAG, "onComplete: " + chat.getMessage());
+                    }
+                }
+
+                Collections.sort(chats);
+
+                messageAdapter = new MessageAdapter(ChatActivity.this, chats);
+                recyclerView.setAdapter(messageAdapter);
             }
         });
 
