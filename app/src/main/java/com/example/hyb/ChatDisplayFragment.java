@@ -101,7 +101,8 @@ public class ChatDisplayFragment extends Fragment {
                             //TODO: Når bruker har valgt bruker dem vil chatte med så skal chat aktiviteten vises og denne skal finishes.
 
                             Intent intent = new Intent(view.getContext(), ChatActivity.class);
-                            intent.putExtra("userUid", clickedUser.getUid());
+                            intent.putExtra("receiverUid", clickedUser.getUid());
+                            intent.putExtra("senderUid", uidKey);
                             view.getContext().startActivity(intent);
                         }
                     }));
