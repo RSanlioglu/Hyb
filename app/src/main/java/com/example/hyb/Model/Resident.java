@@ -10,11 +10,12 @@ public class Resident {
     private String host;
     private ArrayList<String> occupants = new ArrayList<>();
 
-    public Resident(String address, String city, String country, String host) {
+    public Resident(String address, String city, String country, String host, ArrayList<String> occupants) {
         this.address = address;
         this.city = city;
         this.country = country;
         this.host = host;
+        this.occupants = occupants;
     }
 
     public Resident() {

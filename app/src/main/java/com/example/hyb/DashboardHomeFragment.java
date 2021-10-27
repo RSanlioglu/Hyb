@@ -13,11 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.hyb.Model.Event;
 import com.example.hyb.Model.UserInfo;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +31,8 @@ public class DashboardHomeFragment extends Fragment {
 
     private FirebaseFirestore db;  //Instans av firestore for å hente brukerinfo
     private String uidKey; //Nøkkel for å hente bruker
+    private String residentKey; //Nøkkel for å hente brukers resident
+    private ArrayList<String> residentEvents;
 
     public DashboardHomeFragment() {
         //Tom konstruktør
@@ -64,7 +70,8 @@ public class DashboardHomeFragment extends Fragment {
             //User is retrieved successful
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 UserInfo user = documentSnapshot.toObject(UserInfo.class);
-
+                //use this to filter events just for current users resident
+                residentKey = user.getResidentId();
                 String fullName = user.getFirstName() + " " + user.getLastName();
                 String initials = getInitials(fullName);
                 userInitials.setText(initials);
@@ -72,6 +79,29 @@ public class DashboardHomeFragment extends Fragment {
                 userJoinedResident.setText(user.getResidentId());
             }
         });
+
+
+
+        // Retrieve multiple Events using QuerySnapshot and filter them based on the current users residentKey
+        db.collection("events").whereEqualTo("eventResident",residentKey)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+
+                            Event event = documentSnapshot.toObject(Event.class);
+                            String title = event.getEventTitle();
+                            //add relevant events title to arraylist
+                            residentEvents.add(title);
+                        }
+
+                    }
+                });
+        // TODO: 27/10/2021 show residentEvents in recycler view with mak 5 events.
+
+
 
         ListView listView = (ListView) view.findViewById(R.id.listEvents);
 
@@ -102,4 +132,14 @@ public class DashboardHomeFragment extends Fragment {
 
         return fullName.substring(0,1) + fullName.substring(idxLastWhiteSpace + 1, idxLastWhiteSpace + 2);
     }
+
+
+
+
+    private ArrayList<String> loadResidentEvent(View view){
+
+
+        return residentEvents;
+    }
+
 }
