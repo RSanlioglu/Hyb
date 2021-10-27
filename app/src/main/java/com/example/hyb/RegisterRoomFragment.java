@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.hyb.Model.Resident;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -102,20 +104,14 @@ public class RegisterRoomFragment extends Fragment {
                             //Create resident if the another resident already does not exists with the same
                             if ( !residentNameFirebase.exists()){
 
+
                                 // initial arraylist of Occupants, the user that creates new housing is only one in the arraylist.
-                                // add host it to arrayList
                                 OccupantsList = new ArrayList<String>();
                                 OccupantsList.add(uidKey);
+                                // Create new resident
+                                Resident resident = new Resident(residentAddress,residentCity,residentCountry,uidKey,OccupantsList);
 
-                                //create new hashmap
-                                Map<String, Object> resident = new HashMap<>();
-                                resident.put("Address", residentAddress);
-                                resident.put("City", residentCity);
-                                resident.put("Country", residentCountry);
-                                resident.put("Host", uidKey);
-                                resident.put("Occupants", OccupantsList);
-
-                                //add new resident using set() and check if it is successful
+                                //add new resident using set() and check if it is successful, then navigate to dashboard
                                 db.collection("residents").document(residentName).set(resident)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -131,6 +127,7 @@ public class RegisterRoomFragment extends Fragment {
                                             }
                                         });
                             }
+                            // Resident with this name already exists!!
                             else {
                                 txtOuptut.setText(ERROR_MESSAGE);
                                 Log.d(TAG, ERROR_MESSAGE);

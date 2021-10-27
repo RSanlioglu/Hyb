@@ -65,11 +65,14 @@ public class DashboardActivity extends AppCompatActivity {
                     selectedFragment.setArguments(arguments);
                     break;
             }
+
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, selectedFragment).commit();
 
             return true;
         }
     };
+
+
 
 
 

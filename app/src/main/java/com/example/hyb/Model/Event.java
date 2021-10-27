@@ -11,20 +11,28 @@ public class Event {
     private String eventDescription;
     private String eventStartTime;
     private String eventEndTime;
+    private String eventResident;
     private ArrayList<String> attendeesList = new ArrayList<>();
 
-
-
-    public Event(String eventTitle, String eventLocation, String eventDescription, String eventStartTime, String eventEndTime) {
+    public Event(String eventTitle, String eventLocation, String eventDescription, String eventStartTime, String eventEndTime, String eventResident, ArrayList<String> attendeesList) {
         this.eventTitle = eventTitle;
         this.eventLocation = eventLocation;
         this.eventDescription = eventDescription;
         this.eventStartTime = eventStartTime;
         this.eventEndTime = eventEndTime;
-
+        this.eventResident = eventResident;
+        this.attendeesList = attendeesList;
     }
 
     public Event() {
+    }
+
+    public String getEventResident() {
+        return eventResident;
+    }
+
+    public void setEventResident(String eventResident) {
+        this.eventResident = eventResident;
     }
 
     public String getEventTitle() {
