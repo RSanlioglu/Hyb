@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".DashboardActivity">
 
+    <include
+        android:id="@+id/toolbar_dashboard"
+        layout="@layout/toolbar_dashboard" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="412dp"
@@ -18,11 +22,11 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="409dp"
-        android:layout_height="659dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_dashboard" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,9 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hyb.ChatActivity;
 import com.example.hyb.Model.Chat;
+import com.example.hyb.Model.UserInfo;
 import com.example.hyb.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -25,13 +28,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     private List<Chat> messages;
     private Context ctx;
-    private LayoutInflater mInflater;
+    private String receiverFullName;
 
     FirebaseUser user;
 
-    public MessageAdapter(Context ctx, List<Chat> messages) {
+    public MessageAdapter(Context ctx, List<Chat> messages, String receiverFullName) {
         this.messages = messages;
         this.ctx = ctx;
+        this.receiverFullName = receiverFullName;
     }
 
     @NonNull
@@ -50,7 +54,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
         Chat chat = messages.get(position);
 
-        //holder.usersInitials.setImageResource(R.mipmap.ic_launcher);
+        holder.bind(receiverFullName);
         holder.showMessage.setText(chat.getMessage());
     }
 
@@ -61,7 +65,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView showMessage;
-        ImageView usersInitials;
+        TextView usersInitials;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,12 +74,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             usersInitials = itemView.findViewById(R.id.profile_initials);
         }
 
-/*        public void bind(UserInfo currentUserInfo, View.OnClickListener clickListener) {
-            String fullName = currentUserInfo.getFirstName() + " " + currentUserInfo.getLastName();
-            userName.setText(fullName);
-
-            this.itemView.setOnClickListener(clickListener);
-        }*/
+        public void bind(String fullname) {
+            String initials = getInitials(fullname);
+            usersInitials.setText(initials);
+        }
     }
 
     @Override
@@ -86,5 +88,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         } else {
             return MSG_TYPE_LEFT;
         }
+    }
+
+    private String getInitials(String fullName) {
+        int idxLastWhiteSpace = fullName.lastIndexOf(' ');
+
+        return fullName.substring(0,1) + fullName.substring(idxLastWhiteSpace + 1, idxLastWhiteSpace + 2);
     }
 }

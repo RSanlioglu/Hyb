@@ -1,28 +1,24 @@
 package com.example.hyb;
 
-import androidx.annotation.NonNull;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.hyb.Adapter.MessageAdapter;
 import com.example.hyb.Model.Chat;
 import com.example.hyb.Model.UserInfo;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -35,8 +31,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
@@ -56,6 +50,7 @@ public class ChatActivity extends AppCompatActivity {
     MessageAdapter messageAdapter;
     RecyclerView recyclerView;
 
+    ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +62,13 @@ public class ChatActivity extends AppCompatActivity {
         receiverUid = intent.getStringExtra("receiverUid");
         senderUid = intent.getStringExtra("senderUid");
 
-        userName = findViewById(R.id.username);
+        Toolbar toolbar = findViewById(R.id.toolbar_chat);
+        setSupportActionBar(toolbar);
+
         btnSend = findViewById(R.id.btnSend);
         textSend = findViewById(R.id.txtSend);
+        backButton = findViewById(R.id.backFromChat);
+        userName = findViewById(R.id.chat_username);
 
         recyclerView = ChatActivity.this.findViewById(R.id.message_recycler);
         recyclerView.setHasFixedSize(true);
@@ -90,6 +89,16 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+/*                Intent intent = new Intent(v.getContext(), DashboardActivity.class);
+                intent.putExtra("UserInfo", senderUid);
+                v.getContext().startActivity(intent);*/
+                finish();
+            }
+        });
+
         readMessages(senderUid, receiverUid);
     }
 
@@ -107,14 +116,6 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void sendMessage(String sender, String recevier, String message) {
-/*
-        HashMap<String, Object> chatMap = new HashMap<>();
-        chatMap.put("sender", sender);
-        chatMap.put("receiver", recevier);
-        chatMap.put("message", message);
-        chatMap.put("sendTime", LocalDateTime.now());
-*/
-
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
 
@@ -125,7 +126,6 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void readMessages(String senderUid, String receiverUid) {
-        //TODO: TEST OM MELDINGENE BARE HENTES MELLOM WHEREEQUALTO TAGGENE!!!
         /*db.collection("chat").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -168,8 +168,20 @@ public class ChatActivity extends AppCompatActivity {
 
                 Collections.sort(chats);
 
-                messageAdapter = new MessageAdapter(ChatActivity.this, chats);
-                recyclerView.setAdapter(messageAdapter);
+                DocumentReference docRef = db.collection("users").document(receiverUid);
+                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        receiverInfo = documentSnapshot.toObject(UserInfo.class);
+                        String fullName = receiverInfo.getFirstName() + " " + receiverInfo.getLastName();
+
+                        messageAdapter = new MessageAdapter(ChatActivity.this, chats, fullName);
+                        recyclerView.setAdapter(messageAdapter);
+                    }
+                });
+
+                //String fullReceiverName = receiverInfo.getFirstName() + " " + receiverInfo.getLastName();
+
             }
         });
 

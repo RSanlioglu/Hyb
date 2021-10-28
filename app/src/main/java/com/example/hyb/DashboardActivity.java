@@ -2,10 +2,14 @@ package com.example.hyb;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -22,6 +26,9 @@ public class DashboardActivity extends AppCompatActivity {
         Intent receivedIntent = getIntent();
         userUid = receivedIntent.getStringExtra(RegisterActivity.KEY_NAME);
 
+        Toolbar toolbar = findViewById(R.id.toolbar_dashboard);
+        setSupportActionBar(toolbar);
+
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
         bottomNav.setOnItemSelectedListener(navListener);
 
@@ -31,6 +38,27 @@ public class DashboardActivity extends AppCompatActivity {
         arguments.putString("userId", userUid);
         startFragment.setArguments(arguments);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, startFragment).commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.appbar_menu_light, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.logout:
+                Toast.makeText(this, "Logout is selected", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.settings:
+                Toast.makeText(this, "Settings is selected", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /**
