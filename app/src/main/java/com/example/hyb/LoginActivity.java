@@ -21,7 +21,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class loginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "loginActivity";
     public static final String KEY_NAME = "UserInfo";
 
@@ -40,12 +40,6 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
-
-        //Check if user is signed in
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null) {
-            Log.d(TAG, "Current user is signed in");
-        }
     }
 
     @Override
@@ -67,7 +61,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                         } else {
                             //Sign in fails
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(loginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

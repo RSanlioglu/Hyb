@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class DashboardActivity extends AppCompatActivity {
     public static final String KEY_NAME = "UserInfo";
@@ -51,7 +52,12 @@ public class DashboardActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
             case R.id.logout:
-                Toast.makeText(this, "Logout is selected", Toast.LENGTH_SHORT).show();
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getApplicationContext().startActivity(intent);
+                finish();
+                Toast.makeText(this, "Signed out", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.settings:
                 Toast.makeText(this, "Settings is selected", Toast.LENGTH_SHORT).show();
