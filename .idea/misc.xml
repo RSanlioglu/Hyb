@@ -34,16 +34,12 @@
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/users_item.xml" value="0.6" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/menu/appbar_menu.xml" value="0.22" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/menu/appbar_menu_dark.xml" value="0.1796875" />
-        <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/menu/appbar_menu_light.xml" value="0.1796875" />
+        <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/menu/appbar_menu_light.xml" value="0.6" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/menu/bottom_navigation.xml" value="0.1796875" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/menu/chat_menu.xml" value="0.1796875" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
-        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/activity_dashboard.xml" value="0.22264437689969604" />
         <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/activity_login.xml" value="0.27355072463768115" />
-        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/activity_register.xml" value="0.21818181061547676" />
-        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/fragment_add_event.xml" value="0.2879999900124293" />
-        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/fragment_dashboard_home.xml" value="0.4578125" />
-        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/fragment_register_room.xml" value="0.21818181061547676" />
+        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/activity_register.xml" value="0.27355072463768115" />
       </map>
     </option>
   </component>
