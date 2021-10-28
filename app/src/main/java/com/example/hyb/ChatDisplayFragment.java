@@ -2,6 +2,9 @@ package com.example.hyb;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,16 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.example.hyb.Adapter.ChatUsersAdapter;
 import com.example.hyb.Model.Resident;
 import com.example.hyb.Model.UserInfo;
-import com.example.hyb.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -27,7 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 public class ChatDisplayFragment extends Fragment {
-    private String uidKey, residentId;  //Nøkkel for å hente bruker
+    private String uidKey;
     private UserInfo loggedInUser;
     private Resident loggedInUserResident;
     public ArrayList<UserInfo> residentUsers = new ArrayList<>();
@@ -53,9 +49,7 @@ public class ChatDisplayFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         uidKey = getArguments().getString("userId");
-
         getUserInfo(view);
     }
 
@@ -87,18 +81,14 @@ public class ChatDisplayFragment extends Fragment {
                 DocumentReference docRef = db.collection("users").document(occ);
                 docRef.get().addOnSuccessListener(documentSnapshot -> {
                     UserInfo receivedUser = documentSnapshot.toObject(UserInfo.class);
-                    //Log.d(TAG, "onSuccess: " + receivedUser.toString());
                     residentUsers.add(receivedUser);
 
                     chatUsersRecyclerView = view.findViewById(R.id.usersRecyclerView);
-
                     chatUsersRecyclerView.setAdapter(new ChatUsersAdapter(view.getContext(), residentUsers, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             int position = chatUsersRecyclerView.getChildAdapterPosition(v);
                             UserInfo clickedUser = residentUsers.get(position);
-                            //Toast.makeText(view.getContext(), clickedUser.getFirstName() + " clicked", Toast.LENGTH_LONG).show();
-                            //TODO: Når bruker har valgt bruker dem vil chatte med så skal chat aktiviteten vises og denne skal finishes.
 
                             Intent intent = new Intent(view.getContext(), ChatActivity.class);
                             intent.putExtra("receiverUid", clickedUser.getUid());
@@ -106,7 +96,6 @@ public class ChatDisplayFragment extends Fragment {
                             view.getContext().startActivity(intent);
                         }
                     }));
-
                     chatUsersRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
                 });
             }

@@ -4,20 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.hyb.ChatActivity;
 import com.example.hyb.Model.Chat;
-import com.example.hyb.Model.UserInfo;
 import com.example.hyb.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -41,19 +36,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @NonNull
     @Override
     public MessageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
         if(viewType == MSG_TYPE_RIGHT) {
-            View view = LayoutInflater.from(ctx).inflate(R.layout.chat_item_right, parent, false);
-            return new MessageAdapter.ViewHolder(view);
+            view = LayoutInflater.from(ctx).inflate(R.layout.chat_item_right, parent, false);
         } else {
-            View view = LayoutInflater.from(ctx).inflate(R.layout.chat_item_left, parent, false);
-            return new MessageAdapter.ViewHolder(view);
+            view = LayoutInflater.from(ctx).inflate(R.layout.chat_item_left, parent, false);
         }
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
         Chat chat = messages.get(position);
-
         holder.bind(receiverFullName);
         holder.showMessage.setText(chat.getMessage());
     }
@@ -69,9 +63,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             showMessage = itemView.findViewById(R.id.showMessage);
-            usersInitials = itemView.findViewById(R.id.profile_initials);
+            usersInitials = itemView.findViewById(R.id.chatUserInitials);
         }
 
         public void bind(String fullname) {
@@ -92,7 +85,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     private String getInitials(String fullName) {
         int idxLastWhiteSpace = fullName.lastIndexOf(' ');
-
         return fullName.substring(0,1) + fullName.substring(idxLastWhiteSpace + 1, idxLastWhiteSpace + 2);
     }
 }

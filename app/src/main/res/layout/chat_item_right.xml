@@ -11,7 +11,7 @@
         android:layout_alignParentRight="true">
 
         <TextView
-            android:id="@+id/profile_initials"
+            android:id="@+id/chatUserInitials"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
