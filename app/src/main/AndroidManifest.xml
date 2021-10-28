@@ -11,16 +11,21 @@
         android:theme="@style/Theme.Hyb">
         <activity
             android:name=".ChatActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation = "portrait"
+            android:noHistory="true"/>
         <activity
             android:name=".DashboardActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation = "portrait" />
         <activity
             android:name=".LoginRegisterRoomActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation = "portrait"/>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation = "portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,10 +34,16 @@
         </activity>
         <activity
             android:name=".loginActivity"
-            android:label="Login Activity" />
+            android:label="Login Activity"
+            android:screenOrientation = "portrait"/>
         <activity
             android:name=".RegisterActivity"
-            android:label="Register Activity" />
+            android:label="Register Activity"
+            android:screenOrientation = "portrait"/>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

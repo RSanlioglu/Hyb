@@ -58,6 +58,14 @@ public class Resident {
         occupants.add(userID);
     }
 
+    public ArrayList<String> getOccupants() {
+        return occupants;
+    }
+
+    public void setOccupants(ArrayList<String> occupants) {
+        this.occupants = occupants;
+    }
+
     @Override
     public String toString() {
         return "Resident{" +

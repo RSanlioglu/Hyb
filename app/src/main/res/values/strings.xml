@@ -23,7 +23,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="last_name">Last name</string>
-    <string name="first_name">First name</string>
+    <string name="first_name">First name</string> 
     <string name="register_new_account">Register new account</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -40,6 +40,11 @@
     <string name="residentid">ResidentID</string>
     <string name="join_a_resident">Join a resident</string>
     <string name="upcoming_events">Upcoming events</string>
+    <!-- Chat Strings -->
+    <string name="type_your_message">Type your message...</string>
+    <string name="log_out">Log out</string>
+    <string name="settings">Settings</string>
+    <string name="hyb">HYB</string>
     <!-- Create Housing Strings -->
     <string name="ResidentName">Resident - name</string>
     <string name="resident_address">Resident Address</string>
@@ -55,5 +60,4 @@
     <string name="SelectEndTime">select</string>
     <string name="eventStartTime">Start Date and Time</string>
     <string name="eventEndTime">End Date and Time</string>
-
 </resources>

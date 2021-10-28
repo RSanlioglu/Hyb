@@ -2,13 +2,6 @@ package com.example.hyb;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.hyb.Model.Resident;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -91,7 +88,7 @@ public class JoinRoomFragment extends Fragment {
                                     //Endrer residentKey på bruker
                                     DocumentReference userRef = db.collection("users").document(uidKey);
                                     userRef.update("residentId", residentKey);
-                                    resRef.update("Occupants", FieldValue.arrayUnion(uidKey));
+                                    resRef.update("occupants", FieldValue.arrayUnion(uidKey));
                                     navigateToDashboard(uidKey);
                                 } else {
 
