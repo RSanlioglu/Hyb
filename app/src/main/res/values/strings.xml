@@ -60,4 +60,10 @@
     <string name="SelectEndTime">select</string>
     <string name="eventStartTime">Start Date and Time</string>
     <string name="eventEndTime">End Date and Time</string>
+    <!-- ShoppingListFragment Strings -->
+    <string name="Enter_Item">Enter Item Here</string>
+    <string name="Enter_Amount">Amount</string>
+    <string name="item_name">Item Name:</string>
+    <string name="item_amount">Item Amount:</string>
+    <string name="shopping_item_delete_button">Delete</string>
 </resources>
