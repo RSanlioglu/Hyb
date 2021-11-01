@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
 
 public class CalendarFragment extends Fragment {
     private String uidKey; //Nøkkel for å hente bruker
@@ -30,5 +32,10 @@ public class CalendarFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         uidKey = getArguments().getString("userId");
+
+        ListView list = view.findViewById(R.id.list);
+
+
+        //list.
     }
 }
