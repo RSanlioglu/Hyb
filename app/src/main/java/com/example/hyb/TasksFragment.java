@@ -6,22 +6,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CalendarFragment extends Fragment {
+public class TasksFragment extends Fragment {
     private String uidKey; //Nøkkel for å hente bruker
 
-    public CalendarFragment() {
+    public TasksFragment() {
         //Tom konstruktør
     }
 
@@ -29,7 +27,7 @@ public class CalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendar, container, false);
+        return inflater.inflate(R.layout.fragment_tasks, container, false);
     }
 
     @Override
@@ -44,7 +42,7 @@ public class CalendarFragment extends Fragment {
 
         // Mock view
         String[] events = new String[] {
-                "Task 1",
+                "Task 11",
                 "Task 2",
                 "Task 3",
                 "Task 4",
