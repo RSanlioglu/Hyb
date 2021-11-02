@@ -1,8 +1,9 @@
-package com.example.hyb;
+package com.example.hyb.HybSettingsActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.hyb.MainActivity;
+import com.example.hyb.R;
+import com.example.hyb.RegisterActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -21,11 +25,19 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         Intent receivedIntent = getIntent();
-        userUid = receivedIntent.getStringExtra(RegisterActivity.KEY_NAME);
+        userUid = receivedIntent.getStringExtra("userUid");
 
         Toolbar toolbar = findViewById(R.id.toolbar_dashboard);
         setSupportActionBar(toolbar);
+
+        Fragment startFragment = new SettingsOperationFragment();
+        Bundle arguments = new Bundle();
+        arguments.putString("userUid", userUid);
+        startFragment.setArguments(arguments);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, startFragment).commit();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

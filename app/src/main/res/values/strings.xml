@@ -66,4 +66,9 @@
     <string name="item_name">Item Name:</string>
     <string name="item_amount">Item Amount:</string>
     <string name="shopping_item_delete_button">Delete</string>
+    <string name="sign_out">Sign out</string>
+    <string name="change_password">Change password</string>
+    <string name="change_user_information">Change user-information</string>
+    <string name="delete_account">Delete account</string>
+    <string name="leave_resident">Leave Resident</string>
 </resources>
