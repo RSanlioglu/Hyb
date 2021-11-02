@@ -51,55 +51,29 @@ public class SettingsOperationFragment extends Fragment {
         btnBackToDasboard = view.findViewById(R.id.imgBackToDashboard);
 
         //OnClickListener for leave resident button
-        btnLeaveResident.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Clicked on 'Leave resident'", Toast.LENGTH_SHORT).show();
-            }
-        });
+        btnLeaveResident.setOnClickListener(v -> Toast.makeText(getContext(), "Clicked on 'Leave resident'", Toast.LENGTH_SHORT).show());
 
         //OnClickListener for change userInfo button
-        btnChangeUserInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Clicked on 'Change userInfo'", Toast.LENGTH_SHORT).show();
-            }
-        });
+        btnChangeUserInfo.setOnClickListener(v -> Toast.makeText(getContext(), "Clicked on 'Change userInfo'", Toast.LENGTH_SHORT).show());
 
         //OnClickListener for change password button
-        btnChangePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Clicked on 'change password'", Toast.LENGTH_SHORT).show();
-            }
-        });
+        btnChangePassword.setOnClickListener(v -> Toast.makeText(getContext(), "Clicked on 'change password'", Toast.LENGTH_SHORT).show());
 
         //OnClickListener for sign-out button
-        btnSignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intentLogout = new Intent(getContext(), MainActivity.class);
-                intentLogout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);  //Under android 4.1
-                getContext().startActivity(intentLogout);
-                getActivity().finishAffinity(); //Android 4.1 or higher
-                Toast.makeText(getContext(), "Signed out", Toast.LENGTH_SHORT).show();
-            }
+        btnSignOut.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intentLogout = new Intent(getContext(), MainActivity.class);
+            intentLogout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);  //Under android 4.1
+            getContext().startActivity(intentLogout);
+            getActivity().finishAffinity(); //Android 4.1 or higher
+            Toast.makeText(getContext(), "Signed out", Toast.LENGTH_SHORT).show();
         });
 
-        btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Clicked on 'Delete account'", Toast.LENGTH_SHORT).show();
-            }
-        });
+        btnDeleteAccount.setOnClickListener(v -> Toast.makeText(getContext(), "Clicked on 'Delete account'", Toast.LENGTH_SHORT).show());
 
-        btnBackToDasboard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO: Dra tilbake til dashboard
-                Toast.makeText(getContext(), "Clicked on 'Back to dashboard'", Toast.LENGTH_SHORT).show();
-            }
+        btnBackToDasboard.setOnClickListener(v -> {
+            //TODO: Dra tilbake til dashboard
+            getActivity().finish();
         });
     }
 }
