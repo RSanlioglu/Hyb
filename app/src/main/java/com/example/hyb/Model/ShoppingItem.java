@@ -4,21 +4,26 @@ public class ShoppingItem {
     private String itemName;
     private String ItemAmount;
     private String ResidentId;
+    private String itemId;
 
 
-    public ShoppingItem(String itemName, String itemAmount, String residentId) {
+    // used to receive items from firebase since residentId in not gonna display on recyclerview
+
+    public ShoppingItem(String itemAmount, String itemId) {
+        ItemAmount = itemAmount;
+        this.itemId = itemId;
+    }
+
+    public ShoppingItem(String itemName, String itemAmount, String residentId, String itemId) {
         this.itemName = itemName;
         ItemAmount = itemAmount;
         ResidentId = residentId;
-    }
-    // used to receive items from firebase since residentId in not gonna display on recyclerview
-    public ShoppingItem(String itemName, String itemAmount) {
-        this.itemName = itemName;
-        ItemAmount = itemAmount;
+        this.itemId = itemId;
     }
 
     public ShoppingItem() {
     }
+
 
     public String getItemName() {
         return itemName;
@@ -42,6 +47,14 @@ public class ShoppingItem {
 
     public void setResidentId(String residentId) {
         ResidentId = residentId;
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
     }
 
     @Override

@@ -19,7 +19,6 @@ import com.example.hyb.Adapter.ShoppingAdapter;
 import com.example.hyb.Model.ShoppingItem;
 import com.example.hyb.Model.UserInfo;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -34,8 +33,7 @@ public class ShoppingListFragment extends Fragment {
     private final String ERROR_MESSAGE = "Please Enter An Item And Amount!";
     private FirebaseFirestore db;
     private String uidKey;
-    DatabaseReference databaseReference; // Create object of the Firebase Realtime Database
-
+    private String itemKey;
 
 
     public ShoppingListFragment() {
@@ -53,13 +51,11 @@ public class ShoppingListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Create a instance of the database and get its reference
-        databaseReference = FirebaseDatabase.getInstance("gs://hybfirebase.appspot.com/").getReference("shoppingItems");
         db = FirebaseFirestore.getInstance();
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_shopping_list, container, false);
     }
-
 
 
     @Override
@@ -92,22 +88,21 @@ public class ShoppingListFragment extends Fragment {
                     residentID = user.getResidentId();
 
 
+                    String itemKey = db.collection("shoppingItems").document().getId();
                     // create shoppingItem object
-                    ShoppingItem shoppingItem1 = new ShoppingItem(shoppingItemName,shoppingIteAmount,residentID);
+                    ShoppingItem shoppingItem1 = new ShoppingItem(shoppingItemName,shoppingIteAmount,residentID,itemKey);
 
                     //add new shoppingItem using set() and check if it is successful
-                    db.collection("shoppingItems").document().set(shoppingItem1)
+                    db.collection("shoppingItems").document(itemKey).set(shoppingItem1)
                             .addOnSuccessListener(aVoid -> {
-
-                                //remove previous recycle
-                                //recycle.remove();
                                 showCurrentResidentsShoppinglist(view);
-
-                                Log.d(TAG, "DocumentSnapshot successfully written!");
+                                // item added
+                                Toast.makeText(view.getContext(),shoppingItemName + " added", Toast.LENGTH_SHORT).show();
                             })
                             .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
                 });
             }
+
             // please fil all required fields
             else{
                 Toast.makeText(view.getContext(),"please fil all required fields", Toast.LENGTH_SHORT).show();
@@ -115,11 +110,10 @@ public class ShoppingListFragment extends Fragment {
             }
         });
 
-
     }
 
-    // get shoppingItems for the current resident and add the to arraylist and use it for adapter
 
+    // get shoppingItems for the current resident and add the to arraylist and use it for adapter
     public void showCurrentResidentsShoppinglist(View view) {
 
         // get users residentID
@@ -141,51 +135,36 @@ public class ShoppingListFragment extends Fragment {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     duplicateItemList.add(document.toObject(ShoppingItem.class));
 
-                                    // items that we get
-                                    Log.d(TAG, document.getId() + " => " + document.getData());
-
                                 }
                                 // Remove duplicates every times fragment creates
                                 ArrayList<ShoppingItem> itemList = removeDuplicates(duplicateItemList);
-
-                                // items on local arraylist
-                                Log.d(TAG, String.valueOf(itemList));
-
                                 recyclerView = view.findViewById(R.id.recyclerview);
                                 recyclerView.setAdapter(new ShoppingAdapter(getActivity(), itemList));
-                                // Log.d(TAG, "onViewCreated: " + itemList.toString());
-
                                 recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-
 
                             } else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());
                             }
                         });
-
             }
 
         });
 
     }
 
-    // Function to remove duplicates from ArrayList, because we don't use real time firebase
+    // Function to remove duplicates from ArrayList
     public static ArrayList<ShoppingItem> removeDuplicates(ArrayList<ShoppingItem> mixedList)
     {
-        // Create a new ArrayList
         ArrayList<ShoppingItem> newList = new ArrayList<>();
 
-        // Traverse through the first list
         for (ShoppingItem element : mixedList) {
-
-            // If this element is not present in newList
+            //If this element is not present in newList
             // then add it
             if (!newList.contains(element)) {
                 newList.add(element);
             }
         }
 
-        // return the new list
         return newList;
     }
 
