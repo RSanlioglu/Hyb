@@ -53,14 +53,17 @@ public class DashboardActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getApplicationContext().startActivity(intent);
+                Intent intentLogout = new Intent(this, MainActivity.class);
+                intentLogout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getApplicationContext().startActivity(intentLogout);
                 finish();
                 Toast.makeText(this, "Signed out", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.settings:
-                Toast.makeText(this, "Settings is selected", Toast.LENGTH_SHORT).show();
+                Intent intentSettings = new Intent(this, SettingsActivity.class);
+                intentSettings.putExtra("userUid", userUid);
+                intentSettings.addFlags((Intent.FLAG_ACTIVITY_NEW_TASK));
+                getApplicationContext().startActivity(intentSettings);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

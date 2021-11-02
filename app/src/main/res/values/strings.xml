@@ -23,7 +23,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="last_name">Last name</string>
-    <string name="first_name">First name</string> 
+    <string name="first_name">First name</string>
     <string name="register_new_account">Register new account</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
