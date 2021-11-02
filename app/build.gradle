@@ -42,11 +42,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'
-    //noinspection GradleCompatible
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
-    //noinspection GradleCompatible
-    implementation 'com.android.support:cardview-v7:26.1.0'
-
+   // This dependency includes all material components of the android app.
+    implementation 'com.google.android.material:material:1.1.0'
     def nav_version = "2.3.5"
     // Java language implementation
 
