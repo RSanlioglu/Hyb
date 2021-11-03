@@ -11,21 +11,24 @@
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/activity_chat.xml" value="0.22" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/activity_dashbbord.xml" value="0.1" />
-        <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/activity_dashboard.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/activity_dashboard.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/activity_login.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/activity_login_register_room.xml" value="0.22" />
+        <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/activity_login_register_room.xml" value="0.12" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/activity_register.xml" value="0.22" />
+        <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/activity_settings.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/activity_welcomepage.xml" value="0.1" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/chat_item_left.xml" value="0.30952380952380953" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/chat_item_right.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/fragment_add_event.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/fragment_calendar.xml" value="0.14266304347826086" />
+        <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/fragment_change_user_info.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/fragment_chat_display.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/fragment_dashboard_home.xml" value="0.1" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/fragment_join_room.xml" value="0.22" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/fragment_register_room.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/fragment_select_join_or_create_room.xml" value="0.14285714285714285" />
+        <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/fragment_select_join_or_create_room.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/fragment_settings_operation.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/fragment_shopping_list.xml" value="0.14266304347826086" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/toolbar_chat.xml" value="0.5" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/toolbar_dashboard.xml" value="0.3333333333333333" />
@@ -34,8 +37,8 @@
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/layout/users_item.xml" value="0.6" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/menu/appbar_menu.xml" value="0.22" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/menu/appbar_menu_dark.xml" value="0.1796875" />
-        <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/menu/appbar_menu_light.xml" value="0.6" />
-        <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/menu/bottom_navigation.xml" value="0.1796875" />
+        <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/menu/appbar_menu_light.xml" value="0.22" />
+        <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/menu/bottom_navigation.xml" value="0.22" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/menu/chat_menu.xml" value="0.1796875" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/drawable/add_item.xml" value="0.459375" />

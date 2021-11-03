@@ -117,7 +117,9 @@ public class RegisterRoomFragment extends Fragment {
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 Log.d(TAG, "DocumentSnapshot successfully written!");
-                                                navigateToDashboard(uidKey);
+
+                                                DocumentReference userRef = db.collection("users").document(uidKey);
+                                                userRef.update("residentId", residentName).addOnSuccessListener(success -> navigateToDashboard(uidKey));
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
