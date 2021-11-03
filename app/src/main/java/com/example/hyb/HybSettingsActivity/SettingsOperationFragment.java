@@ -127,23 +127,45 @@ public class SettingsOperationFragment extends Fragment {
     private void leaveResident() {
         //Henter brukeren
         DocumentReference userRef = db.collection("users").document(uidKey);
-        userRef.get().addOnSuccessListener(documentSnapshot -> {
-            UserInfo user = documentSnapshot.toObject(UserInfo.class);
+        userRef.get().addOnSuccessListener(userSnapshot -> {
+            UserInfo user = userSnapshot.toObject(UserInfo.class);
             String residentId = user.getResidentId();
+            //Setter resident null på brukeren som forlater
             userRef.update("residentId", null).addOnSuccessListener(s -> {
+                //Henter resident og fjerner brukeren som occupant
               DocumentReference residentRef = db.collection("residents").document(residentId);
-              residentRef.update("occupants", FieldValue.arrayRemove(uidKey)).addOnSuccessListener(new OnSuccessListener<Void>() {
-                  @Override
-                  public void onSuccess(Void unused) {
-                      Intent intent = new Intent(getContext(), LoginRegisterRoomActivity.class);
-                      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                      getContext().startActivity(intent);
-                      getActivity().finishAffinity();
-                      Toast.makeText(getContext(), "You left the resident", Toast.LENGTH_SHORT).show();
-                  }
+              residentRef.update("occupants", FieldValue.arrayRemove(uidKey)).addOnSuccessListener(r -> {
+                  //Henter oppdatert resident
+                  DocumentReference updatedResident = db.collection("residents").document(residentId);
+                  updatedResident.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                      @Override
+                      public void onSuccess(DocumentSnapshot residentSnapshot) {
+                          Resident resident = residentSnapshot.toObject(Resident.class);
+                          if(resident.getOccupants().size() <= 0) {
+                              db.collection("residents").document(residentId).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                  @Override
+                                  public void onSuccess(Void unused) {
+                                      navigateOut();
+                                  }
+                              });
+                          } else {
+                              navigateOut();
+                          }
+                      }
+                  });
+
               });
             });
         });
+    }
+
+    private void navigateOut() {
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        intent.putExtra("UserInfo", uidKey);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        getContext().startActivity(intent);
+        getActivity().finishAffinity(); //Android 4.1 or higher
+        Toast.makeText(getContext(), "You successfully left the resident", Toast.LENGTH_SHORT).show();
     }
 
 }
