@@ -139,30 +139,17 @@ public class SettingsOperationFragment extends Fragment {
               residentRef.update("occupants", FieldValue.arrayRemove(uidKey)).addOnSuccessListener(r -> {
                   //Henter oppdatert resident
                   DocumentReference updatedResident = db.collection("residents").document(residentId);
-                  updatedResident.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                      @Override
-                      public void onSuccess(DocumentSnapshot residentSnapshot) {
-                          Resident resident = residentSnapshot.toObject(Resident.class);
-                          if(resident.getOccupants().size() <= 0) {
-                              db.collection("residents").document(residentId).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                  @Override
-                                  public void onSuccess(Void unused) {
-                                      navigateOut();
-                                  }
-                              });
-                          } else if(resident.getHost().equals(uidKey)) {
-                              //If the host leaves a random new host is selected
-                            Random r = new Random();
-                            int randomNum = r.nextInt(resident.getOccupants().size());
-                            updatedResident.update("host", resident.getOccupants().get(randomNum)).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    navigateOut();
-                                }
-                            });
-                          } else {
-                              navigateOut();
-                          }
+                  updatedResident.get().addOnSuccessListener(residentSnapshot -> {
+                      Resident resident = residentSnapshot.toObject(Resident.class);
+                      if(resident.getOccupants().size() <= 0) {
+                          db.collection("residents").document(residentId).delete().addOnSuccessListener(unused -> navigateOut());
+                      } else if(resident.getHost().equals(uidKey)) {
+                          //If the host leaves a random new host is selected
+                        Random r1 = new Random();
+                        int randomNum = r1.nextInt(resident.getOccupants().size());
+                        updatedResident.update("host", resident.getOccupants().get(randomNum)).addOnSuccessListener(unused -> navigateOut());
+                      } else {
+                          navigateOut();
                       }
                   });
 
