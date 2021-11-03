@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.hyb.DashboardActivity;
 import com.example.hyb.MainActivity;
 import com.example.hyb.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,6 +37,10 @@ public class SettingsOperationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        SettingsActivity activity = (SettingsActivity) getActivity();
+        uidKey = activity.getUserUid();
+
         return inflater.inflate(R.layout.fragment_settings_operation, container, false);
     }
 
@@ -43,21 +48,37 @@ public class SettingsOperationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Toast.makeText(getContext(), uidKey, Toast.LENGTH_SHORT).show();
+
         btnLeaveResident = view.findViewById(R.id.btnLeaveResident);
         btnChangeUserInfo = view.findViewById(R.id.btnChangeUserInfo);
         btnChangePassword = view.findViewById(R.id.btnChangePassword);
         btnSignOut = view.findViewById(R.id.btnSignOut);
         btnDeleteAccount = view.findViewById(R.id.btnDeleteAccount);
-        btnBackToDasboard = view.findViewById(R.id.imgBackToDashboard);
+        btnBackToDasboard = view.findViewById(R.id.imgBackToSettings);
 
         //OnClickListener for leave resident button
-        btnLeaveResident.setOnClickListener(v -> Toast.makeText(getContext(), "Clicked on 'Leave resident'", Toast.LENGTH_SHORT).show());
+        btnLeaveResident.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: Viderefør dem til nye fragmentet
+            }
+        });
 
         //OnClickListener for change userInfo button
-        btnChangeUserInfo.setOnClickListener(v -> Toast.makeText(getContext(), "Clicked on 'Change userInfo'", Toast.LENGTH_SHORT).show());
+        btnChangeUserInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController controller = Navigation.findNavController(view);
+                SettingsOperationFragmentDirections.ActionSettingsOperationFragmentToChangeUserInfoFragment action = SettingsOperationFragmentDirections.actionSettingsOperationFragmentToChangeUserInfoFragment(uidKey);
+                action.setUserUid(uidKey);
+                controller.navigate(action);
+
+            }
+        });
 
         //OnClickListener for change password button
-        btnChangePassword.setOnClickListener(v -> Toast.makeText(getContext(), "Clicked on 'change password'", Toast.LENGTH_SHORT).show());
+        btnChangePassword.setOnClickListener(v -> Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show());
 
         //OnClickListener for sign-out button
         btnSignOut.setOnClickListener(v -> {
@@ -69,10 +90,9 @@ public class SettingsOperationFragment extends Fragment {
             Toast.makeText(getContext(), "Signed out", Toast.LENGTH_SHORT).show();
         });
 
-        btnDeleteAccount.setOnClickListener(v -> Toast.makeText(getContext(), "Clicked on 'Delete account'", Toast.LENGTH_SHORT).show());
+        btnDeleteAccount.setOnClickListener(v -> Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show());
 
         btnBackToDasboard.setOnClickListener(v -> {
-            //TODO: Dra tilbake til dashboard
             getActivity().finish();
         });
     }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_settings"
+    app:startDestination="@id/settingsOperationFragment">
+
+    <fragment
+        android:id="@+id/settingsOperationFragment"
+        android:name="com.example.hyb.HybSettingsActivity.SettingsOperationFragment"
+        android:label="fragment_settings_operation"
+        tools:layout="@layout/fragment_settings_operation" >
+        <action
+            android:id="@+id/action_settingsOperationFragment_to_changeUserInfoFragment"
+            app:destination="@id/changeUserInfoFragment" />
+        <argument
+            android:name="uidKey"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeUserInfoFragment"
+        android:name="com.example.hyb.HybSettingsActivity.ChangeUserInfoFragment"
+        android:label="fragment_change_user_info"
+        tools:layout="@layout/fragment_change_user_info" >
+        <action
+            android:id="@+id/action_changeUserInfoFragment_to_settingsOperationFragment"
+            app:destination="@id/settingsOperationFragment" />
+        <argument
+            android:name="userUid"
+            app:argType="string" />
+    </fragment>
+</navigation>

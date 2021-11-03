@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,15 +28,16 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         Intent receivedIntent = getIntent();
         userUid = receivedIntent.getStringExtra("userUid");
+        Toast.makeText(this, userUid, Toast.LENGTH_SHORT).show();
 
         Toolbar toolbar = findViewById(R.id.toolbar_dashboard);
         setSupportActionBar(toolbar);
 
-        Fragment startFragment = new SettingsOperationFragment();
+        /*Fragment startFragment = new SettingsOperationFragment();
         Bundle arguments = new Bundle();
         arguments.putString("userUid", userUid);
         startFragment.setArguments(arguments);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, startFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, startFragment).commit();*/
     }
 
 
@@ -55,7 +58,6 @@ public class SettingsActivity extends AppCompatActivity {
                 intentLogout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getApplicationContext().startActivity(intentLogout);
                 finish();
-                Toast.makeText(this, "Signed out", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.settings:
                 Intent intentSettings = new Intent(this, SettingsActivity.class);
@@ -67,5 +69,13 @@ public class SettingsActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * Workaround for passing data to fragment
+     * @return userUid
+     */
+    public String getUserUid() {
+        return userUid;
     }
 }

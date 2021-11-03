@@ -71,4 +71,6 @@
     <string name="change_user_information">Change user-information</string>
     <string name="delete_account">Delete account</string>
     <string name="leave_resident">Leave Resident</string>
+    <string name="back_to_dashboard">Back to Dashboard</string>
+    <string name="back_to_settings">Back to settings</string>
 </resources>
