@@ -28,7 +28,6 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         Intent receivedIntent = getIntent();
         userUid = receivedIntent.getStringExtra("userUid");
-        Toast.makeText(this, userUid, Toast.LENGTH_SHORT).show();
 
         Toolbar toolbar = findViewById(R.id.toolbar_dashboard);
         setSupportActionBar(toolbar);

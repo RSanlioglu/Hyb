@@ -48,8 +48,6 @@ public class SettingsOperationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Toast.makeText(getContext(), uidKey, Toast.LENGTH_SHORT).show();
-
         btnLeaveResident = view.findViewById(R.id.btnLeaveResident);
         btnChangeUserInfo = view.findViewById(R.id.btnChangeUserInfo);
         btnChangePassword = view.findViewById(R.id.btnChangePassword);
