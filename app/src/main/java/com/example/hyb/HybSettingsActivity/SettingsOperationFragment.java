@@ -30,6 +30,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Random;
+
 public class SettingsOperationFragment extends Fragment {
     public String uidKey;  //TODO: Finn en løsning for å hente dette
     public Button btnLeaveResident;
@@ -148,6 +150,16 @@ public class SettingsOperationFragment extends Fragment {
                                       navigateOut();
                                   }
                               });
+                          } else if(resident.getHost().equals(uidKey)) {
+                              //If the host leaves a random new host is selected
+                            Random r = new Random();
+                            int randomNum = r.nextInt(resident.getOccupants().size());
+                            updatedResident.update("host", resident.getOccupants().get(randomNum)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    navigateOut();
+                                }
+                            });
                           } else {
                               navigateOut();
                           }
