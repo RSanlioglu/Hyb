@@ -35,7 +35,24 @@ public class Task {
         this.description = description;
     }
 
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
     private boolean isCompleted;
     private String title;
     private String description;
+    private String taskId;
+    private String userId;
 }

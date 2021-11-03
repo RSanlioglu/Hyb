@@ -1,36 +1,31 @@
 package com.example.hyb;
 
 import android.os.Bundle;
-
-import android.content.*;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.hyb.Adapter.TodoAdapter;
 import com.example.hyb.Model.Task;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class TasksFragment extends Fragment {
-    private String uidKey; //Nøkkel for å hente bruker
+
+    private String uidKey;
 
     public TasksFragment() {
-        //Tom konstruktør
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tasks, container, false);
     }
 
