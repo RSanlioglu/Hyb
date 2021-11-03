@@ -1,10 +1,12 @@
 package com.example.hyb.HybSettingsActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -16,9 +18,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.hyb.LoginRegisterRoomActivity;
 import com.example.hyb.MainActivity;
+import com.example.hyb.Model.Resident;
+import com.example.hyb.Model.UserInfo;
 import com.example.hyb.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SettingsOperationFragment extends Fragment {
     public String uidKey;  //TODO: Finn en løsning for å hente dette
@@ -28,6 +38,8 @@ public class SettingsOperationFragment extends Fragment {
     public Button btnSignOut;
     public Button btnDeleteAccount;
     public ImageView btnBackToDasboard;
+
+    private FirebaseFirestore db;
 
     public SettingsOperationFragment() {
         // Required empty public constructor
@@ -39,6 +51,7 @@ public class SettingsOperationFragment extends Fragment {
         // Inflate the layout for this fragment
 
         SettingsActivity activity = (SettingsActivity) getActivity();
+        db = FirebaseFirestore.getInstance();
         uidKey = activity.getUserUid();
 
         return inflater.inflate(R.layout.fragment_settings_operation, container, false);
@@ -59,7 +72,23 @@ public class SettingsOperationFragment extends Fragment {
         btnLeaveResident.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Viderefør dem til nye fragmentet
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("This will remove you from the resident. If you are the only member of this resident the resident will also be deleted").setTitle("Are you sure?");
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        leaveResident();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        //Nothing happens if they cancel
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
@@ -94,4 +123,27 @@ public class SettingsOperationFragment extends Fragment {
             getActivity().finish();
         });
     }
+
+    private void leaveResident() {
+        //Henter brukeren
+        DocumentReference userRef = db.collection("users").document(uidKey);
+        userRef.get().addOnSuccessListener(documentSnapshot -> {
+            UserInfo user = documentSnapshot.toObject(UserInfo.class);
+            String residentId = user.getResidentId();
+            userRef.update("residentId", null).addOnSuccessListener(s -> {
+              DocumentReference residentRef = db.collection("residents").document(residentId);
+              residentRef.update("occupants", FieldValue.arrayRemove(uidKey)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                  @Override
+                  public void onSuccess(Void unused) {
+                      Intent intent = new Intent(getContext(), LoginRegisterRoomActivity.class);
+                      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                      getContext().startActivity(intent);
+                      getActivity().finishAffinity();
+                      Toast.makeText(getContext(), "You left the resident", Toast.LENGTH_SHORT).show();
+                  }
+              });
+            });
+        });
+    }
+
 }
