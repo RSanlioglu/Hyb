@@ -18,6 +18,11 @@
             android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".AddTaskActivity"
+            android:exported="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".DashboardActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
