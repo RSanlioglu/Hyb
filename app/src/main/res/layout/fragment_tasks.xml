@@ -7,12 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".TasksFragment" >
 
-    <TextView
+    <Button
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
-        android:text="Todo list"
+        android:text="Add Todo"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
