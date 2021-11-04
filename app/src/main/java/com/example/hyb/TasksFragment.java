@@ -15,9 +15,18 @@ import com.example.hyb.Model.Task;
 
 import java.util.ArrayList;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+
 public class TasksFragment extends Fragment {
 
     private String uidKey;
+    private FirebaseFirestore db;
+    ArrayList<Task> tasks = new ArrayList<Task>();
 
     public TasksFragment() {
 
@@ -37,19 +46,26 @@ public class TasksFragment extends Fragment {
 
         ListView listView = (ListView) view.findViewById(R.id.list);
 
-        // Mock view
-        ArrayList<Task> tasks = new ArrayList<Task>();
-        Task t = new Task();
-        t.setTitle("Title");
-        t.setDescription("Task description");
-        t.setCompleted(false);
+        db = FirebaseFirestore.getInstance();
 
-        for (int i =0 ; i< 10; ++i)
-            tasks.add(t);
 
-        TodoAdapter adapter = new TodoAdapter( getActivity(), tasks );
-        listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        db.collection("todo").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+
+                            Task task = documentSnapshot.toObject(Task.class);
+
+                            tasks.add(task);
+
+                            TodoAdapter adapter = new TodoAdapter( getActivity(), tasks );
+                            listView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                });
 
     }
 }
