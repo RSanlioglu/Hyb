@@ -1,9 +1,11 @@
 package com.example.hyb;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -51,5 +53,12 @@ public class TasksFragment extends Fragment {
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
+        Button btn =  (Button) view.findViewById(R.id.btnAddTodo);
+
+        btn.setOnClickListener(view1 -> {
+            Intent intent = new Intent(view.getContext(), AddTaskActivity.class);
+
+            view.getContext().startActivity(intent);
+        });
     }
 }
