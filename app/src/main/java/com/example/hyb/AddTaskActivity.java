@@ -1,5 +1,6 @@
 package com.example.hyb;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,7 +54,6 @@ public class AddTaskActivity extends AppCompatActivity {
             t.setCompleted(false);
 
             db.collection("todo").document(t.getTaskId()).set(t).addOnSuccessListener(runnable -> {});
-
 
 
         });

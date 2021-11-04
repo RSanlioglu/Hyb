@@ -1,9 +1,11 @@
 package com.example.hyb;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -27,6 +29,7 @@ public class TasksFragment extends Fragment {
     private String uidKey;
     private FirebaseFirestore db;
     ArrayList<Task> tasks = new ArrayList<Task>();
+    Button btnAddTodo;
 
     public TasksFragment() {
 
@@ -43,11 +46,15 @@ public class TasksFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         uidKey = getArguments().getString("userId");
-
-        ListView listView = (ListView) view.findViewById(R.id.list);
-
         db = FirebaseFirestore.getInstance();
 
+        ListView listView = (ListView) view.findViewById(R.id.list);
+        btnAddTodo = view.findViewById(R.id.btnAddTodo);
+
+        btnAddTodo.setOnClickListener(view1 -> {
+            Intent intent = new Intent(view.getContext(), AddTaskActivity.class);
+            view.getContext().startActivity(intent);
+        });
 
         db.collection("todo").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
