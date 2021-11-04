@@ -55,6 +55,8 @@ public class AddTaskActivity extends AppCompatActivity {
 
             db.collection("todo").document(t.getTaskId()).set(t).addOnSuccessListener(runnable -> {});
 
+//            Intent intent = new Intent(view.getContext(), DashboardActivity.class);
+//            view.getContext().startActivity(intent);`
 
         });
 
