@@ -1,11 +1,9 @@
 package com.example.hyb;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -17,9 +15,18 @@ import com.example.hyb.Model.Task;
 
 import java.util.ArrayList;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+
 public class TasksFragment extends Fragment {
 
     private String uidKey;
+    private FirebaseFirestore db;
+    ArrayList<Task> tasks = new ArrayList<Task>();
 
     public TasksFragment() {
 
@@ -39,26 +46,26 @@ public class TasksFragment extends Fragment {
 
         ListView listView = (ListView) view.findViewById(R.id.list);
 
-        // Mock view
-        ArrayList<Task> tasks = new ArrayList<Task>();
-        Task t = new Task();
-        t.setTitle("Title");
-        t.setDescription("Task description");
-        t.setCompleted(false);
+        db = FirebaseFirestore.getInstance();
 
-        for (int i =0 ; i< 10; ++i)
-            tasks.add(t);
 
-        TodoAdapter adapter = new TodoAdapter( getActivity(), tasks );
-        listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        db.collection("todo").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-        Button btn =  (Button) view.findViewById(R.id.btnAddTodo);
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
 
-        btn.setOnClickListener(view1 -> {
-            Intent intent = new Intent(view.getContext(), AddTaskActivity.class);
+                            Task task = documentSnapshot.toObject(Task.class);
 
-            view.getContext().startActivity(intent);
-        });
+                            tasks.add(task);
+
+                            TodoAdapter adapter = new TodoAdapter( getActivity(), tasks );
+                            listView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+
     }
 }
