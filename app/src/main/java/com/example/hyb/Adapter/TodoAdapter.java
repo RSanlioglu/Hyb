@@ -1,58 +1,124 @@
 package com.example.hyb.Adapter;
 
-import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.EditText;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hyb.Model.Task;
 import com.example.hyb.R;
+import com.google.firebase.database.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class TodoAdapter extends BaseAdapter {
+public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
+    private final List<Task> list;
+    private final OnItemClickListener onItemClickListener;
 
-    private Context ctx;
-    ArrayList<Task> tasks;
-    private LayoutInflater mInflater;
+    public TodoAdapter(OnItemClickListener onItemClickListener) {
+        this.list = new ArrayList<>();
+        this.onItemClickListener = onItemClickListener;
+    }
 
-    public TodoAdapter(Context ctx, ArrayList<Task> tasks){
-        this.ctx = ctx;
-        this.tasks = tasks;
-        this.mInflater = LayoutInflater.from(ctx);
+    public void addTasks(List<Task> items) {
+        list.clear();
+        list.addAll(items);
+        notifyDataSetChanged();
+    }
+
+    public void removeTask(Task task) {
+        int index = list.indexOf(task);
+        if (index != -1) {
+            list.remove(task);
+            notifyItemRemoved(index);
+        }
+    }
+
+    public void onTaskChanged(Task task) {
+        int index = list.indexOf(task);
+        if (index != -1) {
+            notifyItemChanged(index);
+        }
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        private final CheckBox checkBox;
+        private final TextView txtTitle;
+        private final TextView txtDescription;
+        private final ImageButton delete;
+        private final ConstraintLayout constraintLayout;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            checkBox = itemView.findViewById(R.id.checkBox2);
+            txtTitle = itemView.findViewById(R.id.txt_title);
+            txtDescription = itemView.findViewById(R.id.txt_description);
+            delete = itemView.findViewById(R.id.btn_delete);
+            constraintLayout = itemView.findViewById(R.id.root_layout);
+        }
+
+        public void bind(final Task model, final OnItemClickListener listener) {
+            checkBox.setChecked(model.isCompleted());
+            txtTitle.setText(model.getTitle());
+            txtDescription.setText(model.getDescription());
+            if (model.isCompleted()) {
+                txtTitle.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                txtDescription.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                constraintLayout.setBackgroundColor(Color.LTGRAY);
+            } else {
+                txtTitle.setPaintFlags(txtTitle.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                txtDescription.setPaintFlags(txtDescription.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                constraintLayout.setBackgroundColor(Color.WHITE);
+            }
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onDeleteTaskClicked(model);
+                }
+            });
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    model.setCompleted(isChecked);
+                    listener.onTaskCheckChanged(model);
+                }
+            });
+        }
+
+    }
+
+    @NotNull
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.activity_list, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public int getCount() {
-        return tasks.size();
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        Task item = list.get(position);
+        holder.bind(item, onItemClickListener);
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public int getItemCount() {
+        return list.size();
     }
 
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
+    public interface OnItemClickListener {
+        void onDeleteTaskClicked(Task item);
 
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup)
-    {
-        view = mInflater.inflate(R.layout.activity_list, null);
-
-        CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox2);
-
-        EditText editText = (EditText) view.findViewById(R.id.editTextTextMultiLine);
-
-        checkBox.setChecked(tasks.get(i).isCompleted());
-        checkBox.setText(tasks.get(i).getTitle());
-
-        editText.setText(tasks.get(i).getDescription());
-        return view;
+        void onTaskCheckChanged(Task model);
     }
 }

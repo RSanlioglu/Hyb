@@ -1,9 +1,11 @@
 package com.example.hyb.Model;
 
+import androidx.annotation.Nullable;
+
 public class Task {
 
-    public Task(boolean isCompleted, String title, String description) {
-        this.isCompleted = isCompleted;
+    public Task(boolean completed, String title, String description) {
+        this.completed = completed;
         this.title = title;
         this.description = description;
     }
@@ -12,11 +14,11 @@ public class Task {
     }
 
     public boolean isCompleted() {
-        return isCompleted;
+        return completed;
     }
 
     public void setCompleted(boolean completed) {
-        isCompleted = completed;
+        this.completed = completed;
     }
 
     public String getTitle() {
@@ -47,12 +49,26 @@ public class Task {
         return userId;
     }
 
+    public long getCreated() {
+        return created;
+    }
+
+    public void setCreated(long created) {
+        this.created = created;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return obj instanceof Task && ((Task) obj).taskId.equals(taskId);
+    }
     public void setUserId(String userId) {
         this.userId = userId;
     }
-    private boolean isCompleted;
+    private boolean completed;
     private String title;
     private String description;
     private String taskId;
     private String userId;
+
+    private long created;
 }
