@@ -42,9 +42,6 @@ public class ShowUsersForChatFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         db = FirebaseFirestore.getInstance();
-
-
-
         return inflater.inflate(R.layout.fragment_show_users_for_chat, container, false);
     }
 
