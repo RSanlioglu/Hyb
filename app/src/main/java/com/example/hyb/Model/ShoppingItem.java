@@ -2,22 +2,22 @@ package com.example.hyb.Model;
 
 public class ShoppingItem {
     private String itemName;
-    private String ItemAmount;
-    private String ResidentId;
+    private String itemAmount;
+    private String residentId;
     private String itemId;
 
 
     // used to receive items from firebase since residentId in not gonna display on recyclerview
 
     public ShoppingItem(String itemAmount, String itemId) {
-        ItemAmount = itemAmount;
+        this.itemAmount = itemAmount;
         this.itemId = itemId;
     }
 
     public ShoppingItem(String itemName, String itemAmount, String residentId, String itemId) {
         this.itemName = itemName;
-        ItemAmount = itemAmount;
-        ResidentId = residentId;
+        this.itemAmount = itemAmount;
+        this.residentId = residentId;
         this.itemId = itemId;
     }
 
@@ -34,19 +34,19 @@ public class ShoppingItem {
     }
 
     public String getItemAmount() {
-        return ItemAmount;
+        return itemAmount;
     }
 
     public void setItemAmount(String itemAmount) {
-        ItemAmount = itemAmount;
+        this.itemAmount = itemAmount;
     }
 
     public String getResidentId() {
-        return ResidentId;
+        return residentId;
     }
 
     public void setResidentId(String residentId) {
-        ResidentId = residentId;
+        this.residentId = residentId;
     }
 
     public String getItemId() {
@@ -61,7 +61,7 @@ public class ShoppingItem {
     public String toString() {
         return "ShoppingItem{" +
                 "itemName='" + itemName + '\'' +
-                ", ItemAmount='" + ItemAmount + '\'' +
+                ", ItemAmount='" + itemAmount + '\'' +
                 '}';
     }
 

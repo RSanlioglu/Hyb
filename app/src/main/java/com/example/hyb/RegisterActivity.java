@@ -58,6 +58,8 @@ public class RegisterActivity extends AppCompatActivity {
         String txtLastName = lastNameInput.getText().toString();
         Integer phoneNumber = Integer.parseInt(phonenumberInput.getText().toString());
 
+
+
         mAuth.createUserWithEmailAndPassword(txtEmail, txtPassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
