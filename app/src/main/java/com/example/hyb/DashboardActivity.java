@@ -90,7 +90,7 @@ public class DashboardActivity extends AppCompatActivity {
                     selectedFragment = new AddEventFragment();
                     selectedFragment.setArguments(arguments);
                     break;
-                case R.id.nav_calendar:
+                case R.id.nav_task:
                     selectedFragment = new TasksFragment();
                     selectedFragment.setArguments(arguments);
                     break;
