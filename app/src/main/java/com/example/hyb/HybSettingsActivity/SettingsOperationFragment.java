@@ -48,7 +48,6 @@ public class SettingsOperationFragment extends Fragment {
     public String uidKey;
     public Button btnLeaveResident;
     public Button btnChangeUserInfo;
-    public Button btnChangePassword;
     public Button btnSignOut;
     public Button btnDeleteAccount;
     public ImageView btnBackToDasboard;
@@ -78,7 +77,6 @@ public class SettingsOperationFragment extends Fragment {
 
         btnLeaveResident = view.findViewById(R.id.btnLeaveResident);
         btnChangeUserInfo = view.findViewById(R.id.btnChangeUserInfo);
-        btnChangePassword = view.findViewById(R.id.btnChangePassword);
         btnSignOut = view.findViewById(R.id.btnSignOut);
         btnDeleteAccount = view.findViewById(R.id.btnDeleteAccount);
         btnBackToDasboard = view.findViewById(R.id.imgBackToSettings);
@@ -119,8 +117,6 @@ public class SettingsOperationFragment extends Fragment {
             }
         });
 
-        //OnClickListener for change password button
-        btnChangePassword.setOnClickListener(v -> Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show());
 
         //OnClickListener for sign-out button
         btnSignOut.setOnClickListener(v -> {
@@ -192,8 +188,10 @@ public class SettingsOperationFragment extends Fragment {
         });
     }
 
+    //Lag en navigateToLoginRegisterRoom
+
     private void navigateOut() {
-        Intent intent = new Intent(getContext(), MainActivity.class); //TODO: Før brukeren heller til loginRegisterRoo
+        Intent intent = new Intent(getContext(), MainActivity.class);
         intent.putExtra("UserInfo", uidKey);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         getContext().startActivity(intent);

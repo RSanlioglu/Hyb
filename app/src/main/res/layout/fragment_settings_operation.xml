@@ -22,15 +22,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/change_user_information"
-        app:layout_constraintBottom_toTopOf="@+id/btnChangePassword"
-        app:layout_constraintEnd_toEndOf="@+id/btnChangePassword"
-        app:layout_constraintStart_toStartOf="@+id/btnChangePassword" />
-
-    <Button
-        android:id="@+id/btnChangePassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/change_password"
         app:layout_constraintBottom_toTopOf="@+id/btnSignOut"
         app:layout_constraintEnd_toEndOf="@+id/btnSignOut"
         app:layout_constraintStart_toStartOf="@+id/btnSignOut" />
