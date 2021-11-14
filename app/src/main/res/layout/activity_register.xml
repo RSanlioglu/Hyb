@@ -64,7 +64,7 @@
         android:layout_marginBottom="352dp"
         android:autofillHints="@string/password"
         android:background="@drawable/costume_input"
-        android:drawableStart="@drawable/ic_ock"
+        android:drawableStart="@drawable/ic_lock"
         android:drawablePadding="12dp"
         android:ems="10"
         android:hint="@string/password"
