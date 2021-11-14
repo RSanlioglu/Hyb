@@ -61,7 +61,7 @@
     <string name="eventStartTime">Start Date and Time</string>
     <string name="eventEndTime">End Date and Time</string>
     <!-- ShoppingListFragment Strings -->
-    <string name="Enter_Item">Enter Item Here</string>
+    <string name="Enter_Item">Enter Item</string>
     <string name="Enter_Amount">Amount</string>
     <string name="item_name">Item Name:</string>
     <string name="item_amount">Item Amount:</string>
@@ -73,4 +73,6 @@
     <string name="leave_resident">Leave Resident</string>
     <string name="back_to_dashboard">Back to Dashboard</string>
     <string name="back_to_settings">Back to settings</string>
+    <string name="phonenumber">Phonenumber</string>
+    <string name="add_item_shoppinglist">image button for adding item to shoppinslist</string>
 </resources>

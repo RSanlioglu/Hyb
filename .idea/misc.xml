@@ -45,11 +45,19 @@
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/menu/chat_menu.xml" value="0.1796875" />
         <entry key="..\:/Users/Ramazan/Desktop/Mobilprogrammering/Applikasjon/Hyb/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/drawable/add_item.xml" value="0.459375" />
+        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/drawable/costum_input.xml" value="0.459375" />
         <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.459375" />
+        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/drawable/ic_email.xml" value="0.459375" />
+        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/drawable/ic_ock.xml" value="0.459375" />
+        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/drawable/ic_phone.xml" value="0.459375" />
         <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/activity_login.xml" value="0.27355072463768115" />
+        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/activity_login_register_room.xml" value="0.40398550724637683" />
         <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/activity_main.xml" value="0.12037037037037036" />
-        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/activity_register.xml" value="0.27355072463768115" />
-        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/fragment_shopping_list.xml" value="0.2536231884057971" />
+        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/activity_register.xml" value="0.4363636212309535" />
+        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/fragment_add_event.xml" value="0.40398550724637683" />
+        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/fragment_join_room.xml" value="0.40398550724637683" />
+        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/fragment_register_room.xml" value="0.40398550724637683" />
+        <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/fragment_shopping_list.xml" value="0.4363636212309535" />
         <entry key="..\:/Users/hussa/OneDrive/Documents/GitHub/Hyb/app/src/main/res/layout/shopping_item_card.xml" value="0.2536231884057971" />
       </map>
     </option>

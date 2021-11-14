@@ -5,19 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-
 import com.example.hyb.Adapter.ChatUsersAdapter;
 import com.example.hyb.Model.Resident;
 import com.example.hyb.Model.UserInfo;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;

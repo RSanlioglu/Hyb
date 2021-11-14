@@ -6,14 +6,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hyb.Model.UserInfo;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -56,32 +51,29 @@ public class RegisterActivity extends AppCompatActivity {
         String txtPassword = passwordInput.getText().toString();
         String txtFirstName = firstNameInput.getText().toString();
         String txtLastName = lastNameInput.getText().toString();
-        Integer phoneNumber = Integer.parseInt(phonenumberInput.getText().toString());
+        int phoneNumber = Integer.parseInt(phonenumberInput.getText().toString());
 
 
 
         mAuth.createUserWithEmailAndPassword(txtEmail, txtPassword)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "createUserWithEmail:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
 
-                            assert user != null;
-                            UserInfo userInfo = new UserInfo(user.getUid(), txtFirstName, txtLastName, phoneNumber, null, null);
-                            db.collection("users").document(user.getUid()).set(userInfo); //Legger til bruker med bruker info til en ny samling
+                        assert user != null;
+                        UserInfo userInfo = new UserInfo(user.getUid(), txtFirstName, txtLastName, phoneNumber, null, null);
+                        db.collection("users").document(user.getUid()).set(userInfo); //Legger til bruker med bruker info til en ny samling
 
-                            //Ny bruker har ingen rom dem er medlemmer i så dem blir sendt videre til Join/Create
-                            navigateToJoinCreateRoom(userInfo.getUid());
+                        //Ny bruker har ingen rom dem er medlemmer i så dem blir sendt videre til Join/Create
+                        navigateToJoinCreateRoom(userInfo.getUid());
 
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }

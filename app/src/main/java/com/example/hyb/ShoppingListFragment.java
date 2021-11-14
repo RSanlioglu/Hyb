@@ -19,7 +19,6 @@ import com.example.hyb.Adapter.ShoppingAdapter;
 import com.example.hyb.Model.ShoppingItem;
 import com.example.hyb.Model.UserInfo;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,7 +32,6 @@ public class ShoppingListFragment extends Fragment {
     private final String ERROR_MESSAGE = "Please Enter An Item And Amount!";
     private FirebaseFirestore db;
     private String uidKey;
-    private String itemKey;
 
 
     public ShoppingListFragment() {

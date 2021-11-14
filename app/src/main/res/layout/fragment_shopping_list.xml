@@ -9,9 +9,9 @@
 
     <RelativeLayout
         android:id="@+id/header"
-        android:layout_width="414dp"
-        android:layout_height="130dp"
-        android:background="#F1FEFF"
+        android:layout_width="415dp"
+        android:layout_height="155dp"
+        android:background="#FF03DAC5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -19,23 +19,32 @@
             android:id="@+id/shoppingItemName"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-
             android:layout_marginStart="89dp"
             android:layout_marginTop="20dp"
+            android:background="@drawable/costume_input"
             android:ems="10"
             android:hint="@string/Enter_Item"
-            android:inputType="text" />
+            android:inputType="text"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textColorHint="@color/secondary_text"
+            tools:ignore="TextContrastCheck" />
 
         <EditText
             android:id="@+id/shoppingItemAmountInput"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-
+            android:layout_alignParentBottom="true"
             android:layout_marginStart="89dp"
             android:layout_marginTop="60dp"
+            android:textColorHint="@color/secondary_text"
+            android:layout_marginBottom="33dp"
+            android:background="@drawable/costume_input"
             android:ems="10"
             android:hint="@string/Enter_Amount"
-            android:inputType="text" />
+            android:inputType="text"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp" />
 
         <ImageView
             android:id="@+id/addItem"
@@ -43,11 +52,11 @@
             android:layout_height="40sp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="7sp"
             android:layout_marginEnd="45dp"
-            android:layout_toRightOf="@+id/shoppingItemName"
-            android:src="@drawable/add_item" />
 
+            android:layout_toRightOf="@+id/shoppingItemName"
+            android:contentDescription="@string/add_item_shoppinglist"
+            android:src="@drawable/add_item" />
 
 
     </RelativeLayout>
