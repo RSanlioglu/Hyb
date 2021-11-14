@@ -7,18 +7,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
 import com.example.hyb.Model.UserInfo;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
@@ -48,21 +42,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         EditText txtPasswordInput = findViewById(R.id.editTextPassword);
 
         mAuth.signInWithEmailAndPassword(txtEmailInput.getText().toString(), txtPasswordInput.getText().toString())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            //Sign in success, update UI with the signed-in users info.
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                .addOnCompleteListener(this, task -> {
+                    if(task.isSuccessful()) {
+                        //Sign in success, update UI with the signed-in users info.
+                        Log.d(TAG, "signInWithEmail:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
 
-                            assert user != null;
-                            getUserInfo(user.getUid());
-                        } else {
-                            //Sign in fails
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                        }
+                        assert user != null;
+                        getUserInfo(user.getUid());
+                    } else {
+                        //Sign in fails
+                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -74,15 +65,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void getUserInfo(String userId) {
         DocumentReference docRef = db.collection("users").document(userId);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                UserInfo userInfo = documentSnapshot.toObject(UserInfo.class);
-                if(userInfo.getResidentId() == null) {
-                    navigateToJoinCreateRoom(userId);
-                } else {
-                    navigateToDashboard(userId);
-                }
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            UserInfo userInfo = documentSnapshot.toObject(UserInfo.class);
+            if(userInfo.getResidentId() == null) {
+                navigateToJoinCreateRoom(userId);
+            } else {
+                navigateToDashboard(userId);
             }
         });
     }

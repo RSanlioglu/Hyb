@@ -18,7 +18,6 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class DashboardActivity extends AppCompatActivity {
-    public static final String KEY_NAME = "UserInfo";
     public String userUid;
 
     @Override
