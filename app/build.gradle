@@ -44,6 +44,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore'
    // This dependency includes all material components of the android app.
     implementation 'com.google.android.material:material:1.1.0'
+    //apache validator
+    implementation 'commons-validator:commons-validator:1.7'
     def nav_version = "2.3.5"
     // Java language implementation
 
