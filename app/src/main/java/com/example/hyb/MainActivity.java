@@ -86,20 +86,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
 
-        if(null!=activeNetwork){
-
-            if(activeNetwork.getType() == ConnectivityManager.TYPE_WIFI){
-
-                Toast.makeText(this, "Wifi Enabled", Toast.LENGTH_SHORT).show();
-            }
-            else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE){
-
-                Toast.makeText(this, "Data Network Enabled", Toast.LENGTH_SHORT).show();
-            }
-
-        }
-        else {
-            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        if(null==activeNetwork){
+            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show();
         }
     }
 
