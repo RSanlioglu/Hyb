@@ -18,6 +18,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.hyb.Model.Event;
 import com.example.hyb.Model.UserInfo;
@@ -65,8 +66,8 @@ public class AddEventFragment extends Fragment {
         Button btnSelectStartTime = view.findViewById(R.id.selectStartTimeBtn);
         Button btnSelectEndTime = view.findViewById(R.id.selectEndTimeBtn);
         Button btnCreateEvent = view.findViewById(R.id.btnCreateEvent);
-        //initial TextView + EditText
-        TextView textViewErrorMessage = view.findViewById(R.id.textViewErrorMessage);
+        //initial EditText
+
         TextView eventStart = view.findViewById(R.id.eventStartTime);
         TextView eventEnd = view.findViewById(R.id.eventEndTime);
         EditText eventTitleInput = view.findViewById(R.id.EventTitle);
@@ -171,13 +172,13 @@ public class AddEventFragment extends Fragment {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.d(TAG, "DocumentSnapshot successfully written!");
-                                            //
                                             Fragment startFragment = new DashboardHomeFragment();
                                             Bundle arguments = new Bundle();
                                             arguments.putString("userId", uidKey);
                                             startFragment.setArguments(arguments);
                                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, startFragment).commit();
-                                            // TODO: 27/10/2021 make  a snack bar for letting user know the event is created
+                                            Toast.makeText(v.getContext(), eventTitle+ " Created", Toast.LENGTH_SHORT).show();
+
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -189,10 +190,9 @@ public class AddEventFragment extends Fragment {
                                         }
                     });
                 }
-                // TODO: 27/10/2021 make a snack bar if the fields are empty or start/end day is not selected
+
                 // please fil all required fields
                 else{
-                    textViewErrorMessage.setText(ERROR_MESSAGE);
                     Log.d(TAG, ERROR_MESSAGE);
 
                 }

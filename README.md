@@ -5,3 +5,5 @@ I dette repositoriet utvikles det en androiod-applikasjon for faget Mobilprogram
 * Isak Bamiani
 * Ramazan Sanlioglu
 * Vio Sambris
+
+
