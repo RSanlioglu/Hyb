@@ -21,8 +21,11 @@ import com.example.hyb.Model.Task;
 
 import java.util.ArrayList;
 
+import com.example.hyb.Model.UserInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.google.firebase.firestore.Query;
@@ -78,21 +81,32 @@ public class TasksFragment extends Fragment implements TodoAdapter.OnItemClickLi
     @Override
     public void onStart() {
         super.onStart();
-        db.collection("todo")
-                .orderBy("created", Query.Direction.DESCENDING).get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        tasks.clear();
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            Task task = documentSnapshot.toObject(Task.class);
-                            if (System.currentTimeMillis() - THIRTY_DAYS > task.getCreated() && task.isCompleted()) continue;
-                            tasks.add(task);
-                        }
-                        progressBar.setVisibility(View.GONE);
-                        todoAdapter.addTasks(tasks);
-                    }
-                });
+        DocumentReference docRef = db.collection("users").document(uidKey);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                UserInfo user = documentSnapshot.toObject(UserInfo.class);
+                assert user != null;
+                db.collection("todo")
+                        .orderBy("created", Query.Direction.DESCENDING)
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                tasks.clear();
+                                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                    Task task = documentSnapshot.toObject(Task.class);
+                                    if (System.currentTimeMillis() - THIRTY_DAYS > task.getCreated() && task.isCompleted()) continue;
+                                    if(task.getResidentId().equals(user.getResidentId())) {
+                                        tasks.add(task);
+                                    }
+                                }
+                                progressBar.setVisibility(View.GONE);
+                                todoAdapter.addTasks(tasks);
+                            }
+                        });
+            }
+        });
     }
 
     @Override

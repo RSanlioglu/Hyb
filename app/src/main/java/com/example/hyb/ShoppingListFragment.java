@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ public class ShoppingListFragment extends Fragment {
     private final String ERROR_MESSAGE = "Please Enter An Item And Amount!";
     private FirebaseFirestore db;
     private String uidKey;
+    private ProgressBar progressBar;
 
 
     public ShoppingListFragment() {
@@ -63,7 +65,7 @@ public class ShoppingListFragment extends Fragment {
 
         showCurrentResidentsShoppinglist(view);
 
-
+        progressBar = view.findViewById(R.id.progressBarShoppinglist);
         EditText shoppingItem = view.findViewById(R.id.shoppingItemName);
         EditText shoppingItemAmountInput = view.findViewById(R.id.shoppingItemAmountInput);
         ImageView addItemFigure = view.findViewById(R.id.addItem);
@@ -136,6 +138,7 @@ public class ShoppingListFragment extends Fragment {
                                 }
                                 // Remove duplicates every times fragment creates
                                 ArrayList<ShoppingItem> itemList = removeDuplicates(duplicateItemList);
+                                progressBar.setVisibility(View.GONE);
                                 recyclerView = view.findViewById(R.id.recyclerview);
                                 recyclerView.setAdapter(new ShoppingAdapter(getActivity(), itemList));
                                 recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));

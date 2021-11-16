@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -27,6 +29,7 @@ public class ChatDisplayFragment extends Fragment {
     public ArrayList<UserInfo> residentUsers = new ArrayList<>();
     private RecyclerView chatUsersRecyclerView;
     private FirebaseFirestore db;
+    private ProgressBar progressBar;
 
     public ChatDisplayFragment() {
         //Tom konstruktør
@@ -46,8 +49,10 @@ public class ChatDisplayFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         uidKey = getArguments().getString("userId");
+        progressBar = view.findViewById(R.id.progressBarChat);
         getUserInfo(view);
     }
+
     private void getUserInfo(View view) {
         DocumentReference docRef = db.collection("users").document(uidKey);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -78,6 +83,7 @@ public class ChatDisplayFragment extends Fragment {
                     residentUsers.add(receivedUser);
 
                     chatUsersRecyclerView = view.findViewById(R.id.usersRecyclerView);
+                    progressBar.setVisibility(View.GONE);
                     chatUsersRecyclerView.setAdapter(new ChatUsersAdapter(view.getContext(), residentUsers, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
