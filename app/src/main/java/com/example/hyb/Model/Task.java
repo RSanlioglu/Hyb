@@ -4,10 +4,11 @@ import androidx.annotation.Nullable;
 
 public class Task {
 
-    public Task(boolean completed, String title, String description) {
+    public Task(boolean completed, String title, String description, String residentId) {
         this.completed = completed;
         this.title = title;
         this.description = description;
+        this.residentId = residentId;
     }
 
     public Task() {
@@ -57,6 +58,14 @@ public class Task {
         this.created = created;
     }
 
+    public String getResidentId() {
+        return residentId;
+    }
+
+    public void setResidentId(String residentId) {
+        this.residentId = residentId;
+    }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         return obj instanceof Task && ((Task) obj).taskId.equals(taskId);
@@ -69,6 +78,7 @@ public class Task {
     private String description;
     private String taskId;
     private String userId;
+    private String residentId;
 
     private long created;
 }
