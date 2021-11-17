@@ -98,7 +98,5 @@ public class AddTaskActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 }

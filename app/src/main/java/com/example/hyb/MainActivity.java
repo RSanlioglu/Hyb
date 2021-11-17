@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         register.setOnClickListener(this);
 
         isNetworkAvailable();
-
     }
 
 
@@ -53,13 +52,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     intent.putExtra("UserInfo", currentUser.getUid());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(intent);
-                    finish();
+                    finishAffinity();
                 } else {
                     Intent intent = new Intent(getApplicationContext(), LoginRegisterRoomActivity.class);
                     intent.putExtra("UserInfo", currentUser.getUid());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(intent);
-                    finish();
+                    finishAffinity();
                 }
             });
         }
@@ -81,11 +80,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
     public void isNetworkAvailable(){
-
         ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-
         NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
-
         if(null==activeNetwork){
             Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show();
         }
