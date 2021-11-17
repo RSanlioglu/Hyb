@@ -3,12 +3,11 @@ package com.example.hyb;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,17 +18,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.example.hyb.Model.Event;
 import com.example.hyb.Model.UserInfo;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,12 +32,13 @@ import java.util.Calendar;
 
 public class AddEventFragment extends Fragment {
     private Calendar calendar;
+    private int counter = 0;
     private final String TAG = "RegisterResidentFragment";
     private final String ERROR_MESSAGE = "Please fill all required fields!";
     private FirebaseFirestore db;
     private String eventStartTime;
     private String eventEndTime;
-    private String uidKey;  //Nøkkel for å hente bruker
+    private String uidKey;  //key to receive user from database
     private ArrayList<String> attendeesList;
     private String residentID;
     public AddEventFragment() {
@@ -75,36 +71,32 @@ public class AddEventFragment extends Fragment {
         EditText eventDescriptionInput = view.findViewById(R.id.EventDescription);
 
         // onClickListener for select start time button
-        btnSelectStartTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnSelectStartTime.setOnClickListener(v -> {
 
-                calendar = Calendar.getInstance();
-                DatePickerDialog.OnDateSetListener dateSetListener=new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        calendar.set(Calendar.YEAR,year);
-                        calendar.set(Calendar.MONTH,month);
-                        calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+            calendar = Calendar.getInstance();
+            DatePickerDialog.OnDateSetListener dateSetListener=new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view1, int year, int month, int dayOfMonth) {
+                    calendar.set(Calendar.YEAR,year);
+                    calendar.set(Calendar.MONTH,month);
+                    calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
 
-                        TimePickerDialog.OnTimeSetListener timeSetListener=new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                                calendar.set(Calendar.MINUTE,minute);
+                    TimePickerDialog.OnTimeSetListener timeSetListener=new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view1, int hourOfDay, int minute) {
+                            calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
+                            calendar.set(Calendar.MINUTE,minute);
 
-                                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yy-MM-dd HH:mm");
-                                eventStartTime =  simpleDateFormat.format(calendar.getTime());
-                                eventStart.setText(eventStartTime);
-                            }
-                        };
+                            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yy-MM-dd HH:mm");
+                            eventStartTime =  simpleDateFormat.format(calendar.getTime());
+                            eventStart.setText(eventStartTime);
+                        }
+                    };
 
-                        new TimePickerDialog(getActivity(),timeSetListener,calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),false).show();
-                    }
-                };
-                new DatePickerDialog(getActivity(),dateSetListener,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-
+                    new TimePickerDialog(getActivity(),timeSetListener,calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),false).show();
+                }
+            };
+            new DatePickerDialog(getActivity(),dateSetListener,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
         });
         // onClickListener for select start time button
         btnSelectEndTime.setOnClickListener(new View.OnClickListener() {
@@ -135,8 +127,45 @@ public class AddEventFragment extends Fragment {
                 new DatePickerDialog(getActivity(),dateSetListener,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+        // check if the text of TextView has been changed (start time textview)
+        eventStart.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        // onClickListener for create event button
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // counter is used to check if user has selected a  start date and time
+                counter++;
+            }
+        });
+        // check if the text of TextView has been changed (start time textview)
+        eventEnd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // counter is used to check if user has selected a  start date and time
+                counter++;
+            }
+        });
+
+
+        // onClickListener for create new event button
         btnCreateEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,10 +174,13 @@ public class AddEventFragment extends Fragment {
                 String eventTitle = eventTitleInput.getText().toString();
                 String eventLocation = eventLocationInput.getText().toString();
                 String eventDescription = eventDescriptionInput.getText().toString();
-
-                // check if all fields are filed
-                if (!eventTitle.isEmpty() && !eventLocation.isEmpty() && !eventDescription.isEmpty()){
-
+                if (counter != 2){
+                    Toast.makeText(v.getContext(),"Please select start time and end time!" , Toast.LENGTH_SHORT).show();
+                }
+                else if (eventTitle.isEmpty() || eventLocation.isEmpty() || eventDescription.isEmpty()){
+                    Toast.makeText(v.getContext(),ERROR_MESSAGE , Toast.LENGTH_SHORT).show();
+                }
+                else{
                     // get users residentID
                     DocumentReference userRef = db.collection("users").document(uidKey);
                     userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -178,7 +210,7 @@ public class AddEventFragment extends Fragment {
                                             startFragment.setArguments(arguments);
                                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, startFragment).commit();
                                             Toast.makeText(v.getContext(), eventTitle+ " Created", Toast.LENGTH_SHORT).show();
-
+                                            eventStart.setTag(null);
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -186,19 +218,13 @@ public class AddEventFragment extends Fragment {
                                         public void onFailure(@NonNull Exception e) {
                                             Log.w(TAG, "Error writing document", e);
                                         }
-                                                    });
-                                        }
+                                    });
+                        }
                     });
-                }
-
-                // please fil all required fields
-                else{
-                    Log.d(TAG, ERROR_MESSAGE);
 
                 }
                     }
                 });
-
 
             }
 
