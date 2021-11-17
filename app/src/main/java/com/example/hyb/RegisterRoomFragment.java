@@ -13,11 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.hyb.Model.Resident;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -60,7 +57,6 @@ public class RegisterRoomFragment extends Fragment {
         Log.d(TAG, "onViewCreated: " +  uidKey);
 
         //initial variables for input components
-        TextView txtOutput = view.findViewById(R.id.txtOutput);
         EditText residentNameInput = view.findViewById(R.id.ResidentName);
         EditText residentAddressInput = view.findViewById(R.id.ResidentAddress);
         EditText residentCityInput = view.findViewById(R.id.ResidentCity);
@@ -129,12 +125,7 @@ public class RegisterRoomFragment extends Fragment {
                                         DocumentReference userRef = db.collection("users").document(uidKey);
                                         userRef.update("residentId", residentName).addOnSuccessListener(success -> navigateToDashboard(uidKey));
                                     })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w(TAG, "Error writing document", e);
-                                        }
-                                    });
+                                    .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
                         }
 
                     }
