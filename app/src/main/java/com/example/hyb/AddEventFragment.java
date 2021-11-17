@@ -186,11 +186,10 @@ public class AddEventFragment extends Fragment {
                                         public void onFailure(@NonNull Exception e) {
                                             Log.w(TAG, "Error writing document", e);
                                         }
-                                                    });
-                                        }
+                                    });
+                        }
                     });
                 }
-
                 // please fil all required fields
                 else{
                     Log.d(TAG, ERROR_MESSAGE);
@@ -198,8 +197,6 @@ public class AddEventFragment extends Fragment {
                 }
                     }
                 });
-
-
             }
 
     }

@@ -68,8 +68,6 @@ public class DashboardHomeFragment extends Fragment {
             userJoinedResident.setText(user.getResidentId());
         });
 
-
-
         // Retrieve multiple Events using QuerySnapshot and filter them based on the current users residentKey
         db.collection("events").whereEqualTo("eventResident",residentKey)
                 .get()
