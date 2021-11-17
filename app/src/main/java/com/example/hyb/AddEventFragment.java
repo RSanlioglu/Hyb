@@ -210,7 +210,6 @@ public class AddEventFragment extends Fragment {
                                             startFragment.setArguments(arguments);
                                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, startFragment).commit();
                                             Toast.makeText(v.getContext(), eventTitle+ " Created", Toast.LENGTH_SHORT).show();
-                                            eventStart.setTag(null);
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
