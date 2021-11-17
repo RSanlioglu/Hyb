@@ -3,12 +3,9 @@ package com.example.hyb;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,17 +16,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.example.hyb.Model.Event;
 import com.example.hyb.Model.UserInfo;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,7 +32,7 @@ public class AddEventFragment extends Fragment {
     private FirebaseFirestore db;
     private String eventStartTime;
     private String eventEndTime;
-    private String uidKey;  //Nøkkel for å hente bruker
+    private String uidKey;  // key is used to receive the user
     private ArrayList<String> attendeesList;
     private String residentID;
     public AddEventFragment() {
@@ -137,10 +127,51 @@ public class AddEventFragment extends Fragment {
         });
 
         // onClickListener for create event button
-        btnCreateEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnCreateEvent.setOnClickListener(v -> {
 
+            //Convert input dataTypes to String values
+            String eventTitle = eventTitleInput.getText().toString();
+            String eventLocation = eventLocationInput.getText().toString();
+            String eventDescription = eventDescriptionInput.getText().toString();
+
+            // check if all fields are filed
+            if (!eventTitle.isEmpty() && !eventLocation.isEmpty() && !eventDescription.isEmpty()){
+
+                // get users residentID
+                DocumentReference userRef = db.collection("users").document(uidKey);
+                //User is retrieved successful
+                userRef.get().addOnSuccessListener(documentSnapshot -> {
+                    UserInfo user = documentSnapshot.toObject(UserInfo.class);
+                    residentID = user.getResidentId();
+
+                    // initial arraylist of Attendees, the user that creates new event is only one in the arraylist.
+                    attendeesList = new ArrayList<>();
+                    attendeesList.add(uidKey);
+
+                    // create event object
+                    Event event = new Event(eventTitle,eventLocation,eventDescription,eventStartTime,eventEndTime,residentID,attendeesList);
+
+                    //add new event using set() and check if it is successful
+                    db.collection("events").document().set(event)
+                            .addOnSuccessListener(aVoid -> {
+                                Log.d(TAG, "DocumentSnapshot successfully written!");
+                                Fragment startFragment = new DashboardHomeFragment();
+                                Bundle arguments = new Bundle();
+                                arguments.putString("userId", uidKey);
+                                startFragment.setArguments(arguments);
+                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, startFragment).commit();
+                                Toast.makeText(v.getContext(), eventTitle+ " Created", Toast.LENGTH_SHORT).show();
+
+                            })
+                            .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+                                });
+            }
+
+            // please fil all required fields
+            else{
+                Log.d(TAG, ERROR_MESSAGE);
+
+            }
                 //Convert input dataTypes to String values
                 String eventTitle = eventTitleInput.getText().toString();
                 String eventLocation = eventLocationInput.getText().toString();

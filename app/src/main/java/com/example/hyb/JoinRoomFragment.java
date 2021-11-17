@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +37,7 @@ public class JoinRoomFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+      
         db = FirebaseFirestore.getInstance();
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_join_room, container, false);
@@ -61,12 +62,11 @@ public class JoinRoomFragment extends Fragment {
         });
 
         btnJoin.setOnClickListener(v -> {
-            TextView txtOutput = view.findViewById(R.id.txtOutput);
             EditText residentKeyInput = view.findViewById(R.id.txtResidentID);
             String residentKey = residentKeyInput.getText().toString();
 
             if(residentKey.equals("")) {
-                txtOutput.setText(NULL_MESSAGE);
+                Toast.makeText(v.getContext(), NULL_MESSAGE, Toast.LENGTH_SHORT).show();
             } else {
                 DocumentReference resRef = db.collection("residents").document(residentKey);
                 resRef.get().addOnCompleteListener(task -> {
@@ -80,7 +80,7 @@ public class JoinRoomFragment extends Fragment {
                             navigateToDashboard(uidKey);
                         } else {
 
-                            txtOutput.setText(ERROR_MESSAGE);
+                            Toast.makeText(v.getContext(), ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Log.d(TAG, "get failed with ", task.getException());
