@@ -61,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
         String txtPhonenumber = phonenumberInput.getText().toString();
 
         // is password valid?
-        invalidPassword = isInvalidPassword(txtPassword,invalidPasswordDefault);
+        invalidPassword = isInvalidPassword(txtPassword);
 
         /*check if :
           1.first name and last name fields are empty
@@ -118,37 +118,28 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     // Function for password validation
-    public  boolean isInvalidPassword(String txtPassword, boolean invalidPassword) {
+    public static boolean isInvalidPassword(String txtPassword) {
+        boolean invalidPassword = false;
 
         String upperCaseChars = "(.*[A-Z].*)";
         String lowerCaseChars = "(.*[a-z].*)";
         String numbers = "(.*[0-9].*)";
-        String specialChars = "(.*[@,#$%].*$)";
         if (txtPassword.length() > 15 || txtPassword.length() < 8) {
             passwordValidationError = "Password must be less than 15 and more than 8 characters in length.";
             invalidPassword = true;
-            return invalidPassword ;
         }
 
         else if(!txtPassword.matches(upperCaseChars)) {
             passwordValidationError = "Password must have at least one uppercase character";
             invalidPassword = true;
-            return invalidPassword ;
         }
         else if (!txtPassword.matches(lowerCaseChars)) {
             passwordValidationError = "Password must have at least one lowercase character";
             invalidPassword = true;
-            return invalidPassword ;
         }
         else if (!txtPassword.matches(numbers)) {
             passwordValidationError = "Password must have at least one number";
             invalidPassword = true;
-            return invalidPassword ;
-        }
-        else if (!txtPassword.matches(specialChars)) {
-            passwordValidationError = "Password must have at least one special character among @#$%";
-            invalidPassword = true;
-            return invalidPassword ;
         }
 
         return invalidPassword;

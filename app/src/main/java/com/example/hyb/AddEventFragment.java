@@ -172,9 +172,62 @@ public class AddEventFragment extends Fragment {
                 Log.d(TAG, ERROR_MESSAGE);
 
             }
+                //Convert input dataTypes to String values
+                String eventTitle = eventTitleInput.getText().toString();
+                String eventLocation = eventLocationInput.getText().toString();
+                String eventDescription = eventDescriptionInput.getText().toString();
+
+                // check if all fields are filed
+                if (!eventTitle.isEmpty() && !eventLocation.isEmpty() && !eventDescription.isEmpty()){
+
+                    // get users residentID
+                    DocumentReference userRef = db.collection("users").document(uidKey);
+                    userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+
+                        @Override
+                        //User is retrieved successful
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            UserInfo user = documentSnapshot.toObject(UserInfo.class);
+                            residentID = user.getResidentId();
+
+                            // initial arraylist of Attendees, the user that creates new event is only one in the arraylist.
+                            attendeesList = new ArrayList<String>();
+                            attendeesList.add(uidKey);
+
+                            // create event object
+                            Event event = new Event(eventTitle,eventLocation,eventDescription,eventStartTime,eventEndTime,residentID,attendeesList);
+
+                            //add new event using set() and check if it is successful
+                            db.collection("events").document().set(event)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                                            Fragment startFragment = new DashboardHomeFragment();
+                                            Bundle arguments = new Bundle();
+                                            arguments.putString("userId", uidKey);
+                                            startFragment.setArguments(arguments);
+                                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, startFragment).commit();
+                                            Toast.makeText(v.getContext(), eventTitle+ " Created", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG, "Error writing document", e);
+                                        }
+                                    });
+                        }
+                    });
+                }
+                // please fil all required fields
+                else{
+                    Log.d(TAG, ERROR_MESSAGE);
+
+                }
+                    }
                 });
-
-
             }
 
     }
