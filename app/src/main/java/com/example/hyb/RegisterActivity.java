@@ -19,7 +19,6 @@ public class RegisterActivity extends AppCompatActivity {
     private final static String emailValidationError = "Email Prefix Or Email Domain Is Not Valid!";
     private final static String missingFirstOrsLastName= "Please Enter Your First And Last Name!";
     private final static String missingPhoneNumber= "Please Enter 8 Digits Phone Number!";
-
     private final String TAG = "RegisterActivity";
     public static final String KEY_NAME = "UserInfo";
     private FirebaseAuth mAuth;
@@ -59,8 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
         String txtPassword = passwordInput.getText().toString();
         String txtFirstName = firstNameInput.getText().toString();
         String txtLastName = lastNameInput.getText().toString();
-        int phoneNumber = Integer.parseInt(phonenumberInput.getText().toString());
-        String phoneNumber2 = Integer.toString(phoneNumber);
+        String txtPhonenumber = phonenumberInput.getText().toString();
 
         // is password valid?
         invalidPassword = isInvalidPassword(txtPassword,invalidPasswordDefault);
@@ -71,11 +69,11 @@ public class RegisterActivity extends AppCompatActivity {
           3. email is valid using Apache Commons Validator
           4.Password is valid : Contain 8-15 characters//contain at least one upper and lowercase//contain special characters among @#$% */
 
-        if (txtFirstName.isEmpty() && txtLastName.isEmpty()){
-            Toast.makeText(arg0.getContext(), missingFirstOrsLastName, Toast.LENGTH_SHORT).show();
+        if (txtFirstName.isEmpty() || txtLastName.isEmpty() ){
 
+            Toast.makeText(arg0.getContext(), missingFirstOrsLastName, Toast.LENGTH_SHORT).show();
         }
-        else if(phoneNumber2.length() < 8){
+        else if(txtPhonenumber.length() < 8){
             Toast.makeText(arg0.getContext(), missingPhoneNumber, Toast.LENGTH_SHORT).show();
 
         }
@@ -90,18 +88,21 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         else if (invalidPassword == false ){
+            int phoneNumber = Integer.parseInt(txtPhonenumber);
             mAuth.createUserWithEmailAndPassword(txtEmail, txtPassword)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             assert user != null;
                             UserInfo userInfo = new UserInfo(user.getUid(), txtFirstName, txtLastName, phoneNumber, null, null);
-                            db.collection("users").document(user.getUid()).set(userInfo); //Legger til bruker med bruker info til en ny samling
+                            // create new userinfo using set()
+                            db.collection("users").document(user.getUid()).set(userInfo);
 
-                            //Ny bruker har ingen rom dem er medlemmer i så dem blir sendt videre til Join/Create
+                            //New user does not have a resident therefore they get sent to Join/Create
                             navigateToJoinCreateRoom(userInfo.getUid());
 
                         } else {
@@ -113,6 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
                     });
 
         }
+
     }
 
     // Function for password validation
@@ -127,6 +129,7 @@ public class RegisterActivity extends AppCompatActivity {
             invalidPassword = true;
             return invalidPassword ;
         }
+
         else if(!txtPassword.matches(upperCaseChars)) {
             passwordValidationError = "Password must have at least one uppercase character";
             invalidPassword = true;
@@ -162,7 +165,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     /**
-     * Navigerer bruker til neste skjerm
+     * Navigate user to Join/Create activity
      */
     private void navigateToJoinCreateRoom(String userId) {
         Intent intent = new Intent(this, LoginRegisterRoomActivity.class);
