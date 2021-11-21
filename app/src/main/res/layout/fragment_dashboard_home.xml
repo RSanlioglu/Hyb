@@ -10,20 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/userInitials"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="52dp"
-            android:textColor="@android:color/white"
-            android:textSize="34sp"
-            android:translationZ="90dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
@@ -32,9 +18,22 @@
             android:src="@drawable/bg_circle"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/userInitials"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="false"
+            android:textColor="@android:color/white"
+            android:textSize="34sp"
+            android:translationZ="90dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView2"
+            tools:text="VS" />
 
         <TextView
             android:id="@+id/userFullName"
@@ -44,7 +43,8 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@+id/imageView2"
             app:layout_constraintStart_toStartOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            tools:text="@tools:sample/full_names" />
 
         <TextView
             android:id="@+id/txtJoinedResident"
@@ -54,29 +54,58 @@
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/userFullName"
             app:layout_constraintStart_toStartOf="@+id/userFullName"
-            app:layout_constraintTop_toBottomOf="@+id/userFullName" />
+            app:layout_constraintTop_toBottomOf="@+id/userFullName"
+            tools:text="XXXXX" />
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listEvents"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtJoinedResident" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_upcoming_events"
+            tools:listitem="@layout/item_event" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/txt_upcoming_events"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="24dp"
             android:text="@string/upcoming_events"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/purple_700"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/listEvents"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_notifications" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_notifications"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtJoinedResident"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_notification" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressBar3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

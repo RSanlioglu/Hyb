@@ -1,20 +1,22 @@
 package com.example.hyb.Model;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Event {
+public class Event implements Comparable<Event> {
     private String eventTitle;
     private String eventLocation;
     private String eventDescription;
     private String eventStartTime;
     private String eventEndTime;
     private String eventResident;
-    private ArrayList<String> attendeesList = new ArrayList<>();
+    private long created;
+    private List<String> attendeesList = new ArrayList<>();
+    private String id;
 
-    public Event(String eventTitle, String eventLocation, String eventDescription, String eventStartTime, String eventEndTime, String eventResident, ArrayList<String> attendeesList) {
+    public Event(String eventTitle, String eventLocation, String eventDescription, String eventStartTime, String eventEndTime, String eventResident, List<String> attendeesList) {
         this.eventTitle = eventTitle;
         this.eventLocation = eventLocation;
         this.eventDescription = eventDescription;
@@ -75,7 +77,7 @@ public class Event {
         this.eventEndTime = eventEndTime;
     }
 
-    public ArrayList<String> getAttendeesList() {
+    public List<String> getAttendeesList() {
         return attendeesList;
     }
 
@@ -93,5 +95,31 @@ public class Event {
                 ", eventEndTime='" + eventEndTime + '\'' +
                 ", attendees=" + attendeesList +
                 '}';
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return obj instanceof Event && ((Event) obj).id.equals(id);
+    }
+
+    public long getCreated() {
+        return created;
+    }
+
+    public void setCreated(long created) {
+        this.created = created;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public int compareTo(Event o) {
+        return Long.compare(created, o.created);
     }
 }

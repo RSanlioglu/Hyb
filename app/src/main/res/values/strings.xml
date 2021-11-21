@@ -18,7 +18,8 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
+    <string name="phonenumber">Phonenumber</string>
+    <string name="add_item_shoppinglist">image button for adding item to shoppinslist</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_main">MainActivity</string>
@@ -61,7 +62,7 @@
     <string name="eventStartTime">Start Date and Time</string>
     <string name="eventEndTime">End Date and Time</string>
     <!-- ShoppingListFragment Strings -->
-    <string name="Enter_Item">Enter Item</string>
+    <string name="Enter_Item">Enter Item Here</string>
     <string name="Enter_Amount">Amount</string>
     <string name="item_name">Item Name:</string>
     <string name="item_amount">Item Amount:</string>
@@ -73,6 +74,21 @@
     <string name="leave_resident">Leave Resident</string>
     <string name="back_to_dashboard">Back to Dashboard</string>
     <string name="back_to_settings">Back to settings</string>
-    <string name="phonenumber">Phonenumber</string>
-    <string name="add_item_shoppinglist">image button for adding item to shoppinslist</string>
+    <string name="an_error_occurred">An error occurred</string>
+    <string name="task_deleted_successfully">Task deleted successfully</string>
+    <string name="you_have_unread_messages">You have unread messages</string>
+    <string name="you_have_new_tasks_to_do">You have new tasks to do</string>
+    <string name="you_have_new_items_to_buy">You have new items to buy</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="all_fields_are_required">All fields are required!</string>
+    <string name="event_created_successfully">Event created successfully</string>
+    <string name="error_occurred_creating_event">An error occurred creating event</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="see_details">See details</string>
+    <string name="attend">Attend</string>
+    <string name="attending">Attending:</string>
+    <string name="event_detail">Event Detail</string>
+    <string name="event_deleted_successfully">Event deleted successfully</string>
+    <string name="attendance_registration_successful">Attendance registration successful</string>
 </resources>

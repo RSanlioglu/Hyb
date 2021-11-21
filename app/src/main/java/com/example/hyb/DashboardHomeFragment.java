@@ -4,35 +4,73 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.hyb.Adapter.EventAdapter;
+import com.example.hyb.Adapter.NotificationsAdapter;
+import com.example.hyb.Model.Chat;
 import com.example.hyb.Model.Event;
+import com.example.hyb.Model.Notification;
+import com.example.hyb.Model.ShoppingItem;
+import com.example.hyb.Model.Task;
 import com.example.hyb.Model.UserInfo;
-import com.google.firebase.firestore.DocumentReference;
+import com.example.hyb.Repo.ChatsRepository;
+import com.example.hyb.Repo.EventsRepository;
+import com.example.hyb.Repo.RepositoryCallback;
+import com.example.hyb.Repo.ShoppingItemsRepository;
+import com.example.hyb.Repo.TasksRepository;
+import com.example.hyb.Repo.UsersRepository;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class DashboardHomeFragment extends Fragment {
+public class DashboardHomeFragment extends Fragment implements NotificationsAdapter.OnItemClickListener, EventAdapter.OnItemClickListener {
 
-    private FirebaseFirestore db;
-    private String uidKey;
-    //Key for receiving users resident
-    private String residentKey;
+    private FirebaseFirestore db;  //Instans av firestore for å hente brukerinfo
+    private String uidKey; //Nøkkel for å hente bruker
+    private String residentKey; //Nøkkel for å hente brukers resident
     private ArrayList<String> residentEvents;
+    private TextView userInitials;
+    private TextView userFullName;
+    private TextView userJoinedResident;
+    private ChatsRepository chatsRepository;
+    private EventsRepository eventsRepository;
+    private ShoppingItemsRepository shoppingItemsRepository;
+    private NotificationsAdapter notificationsAdapter;
+    private UsersRepository usersRepository;
+    private EventAdapter eventAdapter;
+    private CircularProgressIndicator progressIndicator;
+    private TextView txtUpcomingEventsTitle;
+    private TasksRepository tasksRepository;
+    private List<Chat> unreadChats;
 
     public DashboardHomeFragment() {
-        //empty constructor
+        //Tom konstruktør
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        chatsRepository = new ChatsRepository();
+        eventsRepository = new EventsRepository();
+        shoppingItemsRepository = new ShoppingItemsRepository();
+        usersRepository = new UsersRepository();
+        tasksRepository = new TasksRepository();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         db = FirebaseFirestore.getInstance();
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dashboard_home, container, false);
@@ -41,66 +79,52 @@ public class DashboardHomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        txtUpcomingEventsTitle = view.findViewById(R.id.txt_upcoming_events);
+        userInitials = view.findViewById(R.id.userInitials);
+        userFullName = view.findViewById(R.id.userFullName);
+        userJoinedResident = view.findViewById(R.id.txtJoinedResident);
         uidKey = getArguments().getString("userId");
-        updateUi(view);
+
+        RecyclerView notificationsList = view.findViewById(R.id.rv_notifications);
+        notificationsList.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
+        notificationsList.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+        notificationsAdapter = new NotificationsAdapter(this);
+        notificationsList.setAdapter(notificationsAdapter);
+
+        RecyclerView eventsList = view.findViewById(R.id.listEvents);
+        eventsList.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
+        eventsList.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true));
+        eventAdapter = new EventAdapter(this);
+        eventsList.setAdapter(eventAdapter);
+
+        progressIndicator = view.findViewById(R.id.progressBar3);
     }
 
     /**
-     * Function for updating user-interface after user is send here from register/login
+     * Function for updating user-interface after user is sendt here from register/login
      * @param view - View from onViewCreated function
      */
-    private void updateUi(View view) {
-        TextView userInitials = view.findViewById(R.id.userInitials);
-        TextView userFullName = view.findViewById(R.id.userFullName);
-        TextView userJoinedResident = view.findViewById(R.id.txtJoinedResident);
-
-        DocumentReference userRef = db.collection("users").document(uidKey);
-        //User is retrieved successful
-        userRef.get().addOnSuccessListener(documentSnapshot -> {
-            UserInfo user = documentSnapshot.toObject(UserInfo.class);
-            //use this to filter events just for current users resident
-            residentKey = user.getResidentId();
-            String fullName = user.getFirstName() + " " + user.getLastName();
-            String initials = getInitials(fullName);
-            userInitials.setText(initials);
-            userFullName.setText(fullName);
-            userJoinedResident.setText(user.getResidentId());
-        });
-
-        // Retrieve multiple Events using QuerySnapshot and filter them based on the current users residentKey
-        db.collection("events").whereEqualTo("eventResident",residentKey)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-
-                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-
-                        Event event = documentSnapshot.toObject(Event.class);
-                        String title = event.getEventTitle();
-                        //add relevant events title to arraylist
-                        residentEvents.add(title);
-                    }
-
-                });
-
-        ListView listView = (ListView) view.findViewById(R.id.listEvents);
-
-        //Mock list med event. Byttes ut med event-objekter senere
-        String[] events = new String[] {
-                "Event 1",
-                "Event 2",
-                "Event 3",
-                "Event 4",
-                "Event 5"
-        };
-
-        List<String> events_list = new ArrayList<>(Arrays.asList(events));
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
-                getContext(), android.R.layout.simple_expandable_list_item_1, events_list
-        );
-        listView.setAdapter(arrayAdapter);
-        arrayAdapter.notifyDataSetChanged();
-    }
+//    private void updateUi(View view) {
+//        // TODO: 27/10/2021 show residentEvents in recycler view with mak 5 events.
+//
+//        ListView listView = (ListView) view.findViewById(R.id.listEvents);
+//
+//        //Mock liste med eventer. Byttes ut med event-objekter senere
+//        String[] events = new String[] {
+//                "Event 1",
+//                "Event 2",
+//                "Event 3",
+//                "Event 4",
+//                "Event 5"
+//        };
+//
+//        List<String> events_list = new ArrayList<String>(Arrays.asList(events));
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+//                getContext(), android.R.layout.simple_expandable_list_item_1, events_list
+//        );
+//        listView.setAdapter(arrayAdapter);
+//        arrayAdapter.notifyDataSetChanged();
+//    }
 
     /**
      * Private function for getting initials from users full name
@@ -109,8 +133,191 @@ public class DashboardHomeFragment extends Fragment {
      */
     private String getInitials(String fullName) {
         int idxLastWhiteSpace = fullName.lastIndexOf(' ');
-
         return fullName.substring(0,1) + fullName.substring(idxLastWhiteSpace + 1, idxLastWhiteSpace + 2);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        showProgressIndicator();
+        notificationsAdapter.clearData();
+        usersRepository.getUserInfo(uidKey, new UsersRepository.UserInfoListener() {
+            @Override
+            public void onSuccess(List<UserInfo> userInfos) {
+                //use this to filter events just for current users resident
+                UserInfo userInfo = userInfos.get(0);
+                residentKey = userInfo.getResidentId();
+                String fullName = userInfo.getFirstName() + " " + userInfo.getLastName();
+                String initials = getInitials(fullName);
+                userInitials.setText(initials);
+                userFullName.setText(fullName);
+                userJoinedResident.setText(userInfo.getResidentId());
+                fetchEvents();
+                fetchUnreadChats();
+                fetchShoppingItems();
+                fetchTasks();
+            }
+
+            @Override
+            public void onFailure() {
+                showErrorMessage();
+            }
+        });
+
+//        // Retrieve multiple Events using QuerySnapshot and filter them based on the current users residentKey
+//        db.collection("events").whereEqualTo("eventResident",residentKey)
+//                .get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//
+//                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+//
+//                            Event event = documentSnapshot.toObject(Event.class);
+//                            String title = event.getEventTitle();
+//                            //add relevant events title to arraylist
+//                            residentEvents.add(title);
+//                        }
+//
+//                    }
+//                });
+    }
+
+    private void fetchTasks() {
+        tasksRepository.getTasks(new TasksRepository.TasksListener() {
+            @Override
+            public void onSuccess(List<Task> tasks) {
+                if (!tasks.isEmpty()) {
+                    Notification notification = new Notification();
+                    notification.setTitle(getString(R.string.you_have_new_tasks_to_do));
+                    notification.setType(Notification.Type.TASKS);
+                    notificationsAdapter.addNotification(notification);
+                    hideProgressIndicator();
+                }
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+    }
+
+    private void fetchShoppingItems() {
+        shoppingItemsRepository.getShoppingItems(residentKey, new ShoppingItemsRepository.ShoppingItemsListener() {
+            @Override
+            public void onSuccess(List<ShoppingItem> shoppingItems) {
+                if (!shoppingItems.isEmpty()) {
+                    Notification notification = new Notification();
+                    notification.setTitle(getString(R.string.you_have_new_items_to_buy));
+                    notification.setType(Notification.Type.SHOPPING);
+                    notificationsAdapter.addNotification(notification);
+                    hideProgressIndicator();
+                }
+            }
+
+            @Override
+            public void onFailure() {
+                showErrorMessage();
+                hideProgressIndicator();
+            }
+        });
+    }
+
+    private void fetchUnreadChats() {
+        chatsRepository.getUnreadChatsForUser(uidKey, new ChatsRepository.ChatsListener() {
+            @Override
+            public void onSuccess(List<Chat> chats) {
+                unreadChats = chats;
+                if (!chats.isEmpty()) {
+                    Notification notification = new Notification();
+                    notification.setTitle(getString(R.string.you_have_unread_messages));
+                    notification.setType(Notification.Type.CHATS);
+                    notificationsAdapter.addNotification(notification);
+                    hideProgressIndicator();
+                }
+            }
+
+            @Override
+            public void onFailure() {
+                showErrorMessage();
+                hideProgressIndicator();
+            }
+        });
+    }
+
+    private void fetchEvents() {
+        eventsRepository.getEvents(residentKey, new EventsRepository.EventsListener() {
+            @Override
+            public void onSuccess(List<Event> events) {
+                if (!events.isEmpty()) {
+                    txtUpcomingEventsTitle.setVisibility(View.VISIBLE);
+                    eventAdapter.addData(events);
+                    hideProgressIndicator();
+                }
+            }
+
+            @Override
+            public void onFailure() {
+                showErrorMessage();
+                hideProgressIndicator();
+            }
+        });
+    }
+
+    @Override
+    public void onNotificationCancelClicked(Notification item, int position) {
+        switch (item.getType()) {
+            case CHATS:
+                updateChatsAsRead();
+                break;
+            case TASKS:
+                // Implement what to do when tasks notification is closed
+                break;
+            case SHOPPING:
+                // Implement what to do when shopping notification is closed
+                break;
+        }
+        notificationsAdapter.removeNotification(position);
+    }
+
+    private void updateChatsAsRead() {
+        for (Chat chat : unreadChats) {
+            chat.setRead(true);
+        }
+        chatsRepository.setUpdateChats(unreadChats, new RepositoryCallback() {
+            @Override
+            public void onSuccess() {
+                // No-op
+            }
+
+            @Override
+            public void onFailure() {
+                showErrorMessage();
+            }
+        });
+    }
+
+    @Override
+    public void onEventClicked(Event model) {
+        // Not implemented
+    }
+
+    @Override
+    public void onCloseClicked(int adapterPosition) {
+        eventAdapter.removeItem(adapterPosition);
+    }
+
+    private void showProgressIndicator() {
+        txtUpcomingEventsTitle.setVisibility(View.INVISIBLE);
+        progressIndicator.show();
+    }
+
+    private void hideProgressIndicator() {
+        progressIndicator.hide();
+    }
+
+    private void showErrorMessage() {
+        Toast.makeText(requireContext(), getString(R.string.an_error_occurred), Toast.LENGTH_SHORT).show();
+    }
 }

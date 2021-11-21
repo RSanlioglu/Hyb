@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ProgressBar
+        android:id="@+id/progressBar4"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <EditText
+        android:id="@+id/txt_input_end_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:focusable="false"
+        android:focusableInTouchMode="true"
+        android:hint="@string/eventEndTime"
+        app:layout_constraintEnd_toEndOf="@+id/txt_input_event_description"
+        app:layout_constraintStart_toEndOf="@+id/txt_input_start_date"
+        app:layout_constraintTop_toTopOf="@+id/txt_input_start_date" />
+
+    <EditText
+        android:id="@+id/txt_input_start_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:focusable="false"
+        android:focusableInTouchMode="true"
+        android:hint="@string/eventStartTime"
+        android:inputType="date"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/txt_input_end_date"
+        app:layout_constraintStart_toStartOf="@+id/txt_input_event_description"
+        app:layout_constraintTop_toBottomOf="@+id/txt_input_event_description" />
+
+    <EditText
+        android:id="@+id/txt_input_event_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:autofillHints="Event title"
+        android:ems="10"
+        android:hint="@string/eventTitle"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <EditText
+        android:id="@+id/txt_input_event_location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:autofillHints="Event location"
+        android:ems="10"
+        android:hint="@string/eventLocation"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/txt_input_event_title"
+        app:layout_constraintStart_toStartOf="@+id/txt_input_event_title"
+        app:layout_constraintTop_toBottomOf="@+id/txt_input_event_title"
+        tools:ignore="TextContrastCheck" />
+
+    <EditText
+        android:id="@+id/txt_input_event_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:autofillHints="Event description"
+        android:ems="10"
+        android:hint="@string/eventDescription"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="@+id/txt_input_event_location"
+        app:layout_constraintStart_toStartOf="@+id/txt_input_event_location"
+        app:layout_constraintTop_toBottomOf="@+id/txt_input_event_location"
+        tools:ignore="TextContrastCheck" />
+
+    <Button
+        android:id="@+id/btnCreateEvent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/createEvent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_input_start_date" />
+
+    <TextView
+        android:id="@+id/textViewErrorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnCreateEvent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

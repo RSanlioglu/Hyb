@@ -20,12 +20,12 @@ import com.example.hyb.Adapter.TodoAdapter;
 import com.example.hyb.Model.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import com.example.hyb.Model.UserInfo;
+import com.example.hyb.Repo.RepositoryCallback;
+import com.example.hyb.Repo.TasksRepository;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.google.firebase.firestore.Query;
@@ -34,25 +34,17 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 
 public class TasksFragment extends Fragment implements TodoAdapter.OnItemClickListener {
-
-    public static final long THIRTY_DAYS = 2592000000L;
     private String uidKey;
-    private FirebaseFirestore db;
-    ArrayList<Task> tasks = new ArrayList<Task>();
     Button btnAddTodo;
-    private ListView listView;
     private TodoAdapter todoAdapter;
     private ProgressBar progressBar;
-
-    public TasksFragment() {
-
-    }
+    private TasksRepository tasksRepository;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        db = FirebaseFirestore.getInstance();
         uidKey = getArguments().getString("userId");
+        tasksRepository = new TasksRepository();
     }
 
     @Override
@@ -81,30 +73,16 @@ public class TasksFragment extends Fragment implements TodoAdapter.OnItemClickLi
     @Override
     public void onStart() {
         super.onStart();
-        DocumentReference docRef = db.collection("users").document(uidKey);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        tasksRepository.getTasks(new TasksRepository.TasksListener() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                UserInfo user = documentSnapshot.toObject(UserInfo.class);
-                assert user != null;
-                db.collection("todo")
-                        .orderBy("created", Query.Direction.DESCENDING)
-                        .get()
-                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                            @Override
-                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                tasks.clear();
-                                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                                    Task task = documentSnapshot.toObject(Task.class);
-                                    if (System.currentTimeMillis() - THIRTY_DAYS > task.getCreated() && task.isCompleted()) continue;
-                                    if(task.getResidentId().equals(user.getResidentId())) {
-                                        tasks.add(task);
-                                    }
-                                }
-                                progressBar.setVisibility(View.GONE);
-                                todoAdapter.addTasks(tasks);
-                            }
-                        });
+            public void onSuccess(List<Task> tasks) {
+                progressBar.setVisibility(View.GONE);
+                todoAdapter.addTasks(tasks);
+            }
+
+            @Override
+            public void onFailure() {
+                showErrorMessage();
             }
         });
     }
@@ -112,19 +90,18 @@ public class TasksFragment extends Fragment implements TodoAdapter.OnItemClickLi
     @Override
     public void onDeleteTaskClicked(Task task) {
         progressBar.setVisibility(View.VISIBLE);
-        db.collection("todo").document(task.getTaskId()).delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(requireContext(), "Task deleted successfully", Toast.LENGTH_SHORT).show();
-                        todoAdapter.removeTask(task);
-                        progressBar.setVisibility(View.GONE);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+        tasksRepository.deleteTask(task, new RepositoryCallback() {
             @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(requireContext(), "An error occurred", Toast.LENGTH_SHORT).show();
+            public void onSuccess() {
+                Toast.makeText(requireContext(), getString(R.string.task_deleted_successfully), Toast.LENGTH_SHORT).show();
+                todoAdapter.removeTask(task);
                 progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure() {
+                progressBar.setVisibility(View.GONE);
+                showErrorMessage();
             }
         });
     }
@@ -132,19 +109,22 @@ public class TasksFragment extends Fragment implements TodoAdapter.OnItemClickLi
     @Override
     public void onTaskCheckChanged(Task task) {
         progressBar.setVisibility(View.VISIBLE);
-        db.collection("todo").document(task.getTaskId()).update("completed", task.isCompleted())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        progressBar.setVisibility(View.GONE);
-                        todoAdapter.onTaskChanged(task);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+        tasksRepository.updateTaskState(task, new RepositoryCallback() {
             @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(requireContext(), "An error occurred", Toast.LENGTH_SHORT).show();
+            public void onSuccess() {
+                progressBar.setVisibility(View.GONE);
+                todoAdapter.onTaskChanged(task);
+            }
+
+            @Override
+            public void onFailure() {
+                showErrorMessage();
                 progressBar.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void showErrorMessage() {
+        Toast.makeText(requireContext(), getString(R.string.an_error_occurred), Toast.LENGTH_SHORT).show();
     }
 }
