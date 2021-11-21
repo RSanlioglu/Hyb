@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hyb.Adapter.MessageAdapter;
 import com.example.hyb.Model.Chat;
 import com.example.hyb.Model.UserInfo;
+import com.example.hyb.Repo.ChatsRepository;
+import com.example.hyb.Repo.RepositoryCallback;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,6 +35,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class ChatActivity extends AppCompatActivity {
     public final String TAG = "ChatActivity";
@@ -50,12 +55,14 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     ImageButton backButton;
+    private ChatsRepository chatsRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        db = FirebaseFirestore.getInstance();;
+        db = FirebaseFirestore.getInstance();
+        chatsRepository = new ChatsRepository();
 
         intent = getIntent();
         receiverUid = intent.getStringExtra("receiverUid");
@@ -91,6 +98,9 @@ public class ChatActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+/*                Intent intent = new Intent(v.getContext(), DashboardActivity.class);
+                intent.putExtra("UserInfo", senderUid);
+                v.getContext().startActivity(intent);*/
                 finish();
             }
         });
@@ -116,12 +126,35 @@ public class ChatActivity extends AppCompatActivity {
         LocalDateTime now = LocalDateTime.now();
 
         Chat createdChat = new Chat(sender, recevier, message, dtf.format(now));
-
+        createdChat.setId(UUID.randomUUID().toString());
         db.collection("chat").document().set(createdChat);
         readMessages(senderUid, receiverUid);
     }
 
     private void readMessages(String senderUid, String receiverUid) {
+        /*db.collection("chat").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()) {
+                    List<Chat> chats = new ArrayList<Chat>();
+                    for(QueryDocumentSnapshot document:task.getResult()) {
+                        Chat chat = document.toObject(Chat.class);
+                        if(chat.getReceiver().equals(senderUid) && chat.getSender().equals(receiverUid) ||
+                                chat.getReceiver().equals(receiverUid) && chat.getSender().equals(senderUid)) {
+                            chats.add(chat);
+                            Log.d(TAG, "onComplete: " + chat.getMessage());
+                        }
+                    }
+
+
+                    messageAdapter = new MessageAdapter(ChatActivity.this, chats);
+                    recyclerView.setAdapter(messageAdapter);
+                } else {
+                    Log.d(TAG, "onComplete: " + task.getException());
+                }
+            }
+        });*/
+
         db.collection("chat").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
@@ -130,11 +163,19 @@ public class ChatActivity extends AppCompatActivity {
                     return;
                 }
                 List<Chat> chats = new ArrayList<Chat>();
+                List<Chat> unreadChats = new ArrayList<>();
                 for(QueryDocumentSnapshot document:value) {
                     Chat chat = document.toObject(Chat.class);
+                    if (chat.getId() == null) {
+                        chat.setId(document.getId());
+                    }
                     if(chat.getReceiver().equals(senderUid) && chat.getSender().equals(receiverUid) ||
                             chat.getReceiver().equals(receiverUid) && chat.getSender().equals(senderUid)) {
                         chats.add(chat);
+                        if (!chat.isRead()) {
+                            chat.setRead(true);
+                            unreadChats.add(chat);
+                        }
                         Log.d(TAG, "onComplete: " + chat.getMessage());
                     }
                 }
@@ -152,10 +193,28 @@ public class ChatActivity extends AppCompatActivity {
                         recyclerView.setAdapter(messageAdapter);
                     }
                 });
+
+                if (!unreadChats.isEmpty()) {
+                    chatsRepository.setUpdateChats(unreadChats, new RepositoryCallback() {
+                        @Override
+                        public void onSuccess() {
+                            // Do nothing
+                        }
+
+                        @Override
+                        public void onFailure() {
+                            Toast.makeText(ChatActivity.this, "An error occurred", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+                //String fullReceiverName = receiverInfo.getFirstName() + " " + receiverInfo.getLastName();
+
             }
         });
 
     }
+
 
 
 }

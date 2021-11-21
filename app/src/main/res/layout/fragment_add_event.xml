@@ -7,157 +7,44 @@
     android:layout_height="match_parent"
     tools:context=".AddEventFragment">
 
+    <ProgressBar
+        android:id="@+id/progressBar6"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <TextView
-            android:id="@+id/eventEndTime"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:background="@drawable/costume_input"
-            android:gravity="center_horizontal|center_horizontal"
-            android:minHeight="48dp"
-            android:paddingStart="12dp"
-            android:paddingTop="6dp"
-            android:paddingEnd="12dp"
-            android:text="@string/eventEndTime"
-            android:textColor="#757575"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_event_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.425"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/eventStartTime"
-            app:layout_constraintVertical_bias="0.125" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_add_event"
+            tools:listitem="@layout/item_event_large">
 
-        <TextView
-            android:id="@+id/eventStartTime"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:background="@drawable/costume_input"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:text="@string/eventStartTime"
-            android:paddingTop="6dp"
-            android:gravity="center_horizontal|center_horizontal"
-            android:textAllCaps="false"
-            android:textColor="#757575"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.425"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline2"
-            app:layout_constraintVertical_bias="0.105" />
+        </androidx.recyclerview.widget.RecyclerView>
 
         <Button
-            android:id="@+id/selectEndTimeBtn"
+            android:id="@+id/btn_add_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="44dp"
-            android:text="@string/SelectEndTime"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline2"
-            app:layout_constraintVertical_bias="0.346"
-            tools:ignore="DuplicateSpeakableTextCheck" />
-
-        <EditText
-            android:id="@+id/EventTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="76dp"
-            android:autofillHints="Event title"
-            android:ems="10"
-            android:hint="@string/eventTitle"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TextContrastCheck"
-            android:textColorHint="@color/secondary_text"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:background="@drawable/costume_input"/>
-
-        <EditText
-            android:id="@+id/EventLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:autofillHints="Event location"
-            android:background="@drawable/costume_input"
-            android:ems="10"
-            android:hint="@string/eventLocation"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:textColorHint="@color/secondary_text"
-            app:layout_constraintBottom_toTopOf="@+id/EventDescription"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/EventTitle"
-            app:layout_constraintVertical_bias="0.196"
-            tools:ignore="TextContrastCheck" />
-
-        <EditText
-            android:id="@+id/EventDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autofillHints="Event description"
-            android:background="@drawable/costume_input"
-            android:ems="10"
-            android:hint="@string/eventDescription"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:textColorHint="@color/secondary_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/EventTitle"
-            app:layout_constraintVertical_bias="0.198"
-            tools:ignore="TextContrastCheck" />
-
-        <Button
-            android:id="@+id/btnCreateEvent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
             android:text="@string/createEvent"
-            android:textColorHighlight="@color/purple_500"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline2"
-            app:layout_constraintVertical_bias="0.816" />
-
-
-        <Button
-            android:id="@+id/selectStartTimeBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="44dp"
-            android:text="@string/SelectStartTime"
-            app:layout_constraintBottom_toTopOf="@+id/selectEndTimeBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline2"
-            app:layout_constraintVertical_bias="0.757" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="291dp" />
-
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

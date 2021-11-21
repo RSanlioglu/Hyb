@@ -6,10 +6,12 @@ import java.time.LocalDateTime;
 import java.util.Comparator;
 
 public class Chat implements Comparable<Chat>{
+    private String id;
     private String sender;
     private String receiver;
     private String message;
     private String sentDate;
+    private boolean isRead;
 
     public Chat(String sender, String receiver, String message, String sentDate) {
         this.sender = sender;
@@ -60,5 +62,21 @@ public class Chat implements Comparable<Chat>{
             return 0;
         }
         return getSentDate().compareTo(o.getSentDate());
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
