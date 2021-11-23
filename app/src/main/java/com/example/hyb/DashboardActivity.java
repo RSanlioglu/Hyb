@@ -74,37 +74,49 @@ public class DashboardActivity extends AppCompatActivity {
      * Listener that handles user input on navigation-bar
      */
     private NavigationBarView.OnItemSelectedListener navListener = new NavigationBarView.OnItemSelectedListener() {
+        Fragment selectedFragment = new DashboardHomeFragment();
+
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment selectedFragment = null;
             Bundle arguments = new Bundle();
             arguments.putString("userId", userUid);
-
             switch (item.getItemId()) {
                 case R.id.nav_home:
-                    selectedFragment = new DashboardHomeFragment();
-                    selectedFragment.setArguments(arguments);
+                    if(!(selectedFragment instanceof DashboardHomeFragment)) {
+                        selectedFragment = new DashboardHomeFragment();
+                        selectedFragment.setArguments(arguments);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, selectedFragment).commit();
+                    }
                     break;
                 case R.id.nav_event:
-                    selectedFragment = new AddEventFragment();
-                    selectedFragment.setArguments(arguments);
+                    if(!(selectedFragment instanceof  AddEventFragment)) {
+                        selectedFragment = new AddEventFragment();
+                        selectedFragment.setArguments(arguments);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, selectedFragment).commit();
+                    }
                     break;
                 case R.id.nav_task:
-                    selectedFragment = new TasksFragment();
-                    selectedFragment.setArguments(arguments);
+                    if(!(selectedFragment instanceof TasksFragment)) {
+                        selectedFragment = new TasksFragment();
+                        selectedFragment.setArguments(arguments);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, selectedFragment).commit();
+                    }
                     break;
                 case R.id.nav_shoppList:
-                    selectedFragment = new ShoppingListFragment();
-                    selectedFragment.setArguments(arguments);
+                    if(!(selectedFragment instanceof ShoppingListFragment)) {
+                        selectedFragment = new ShoppingListFragment();
+                        selectedFragment.setArguments(arguments);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, selectedFragment).commit();
+                    }
                     break;
                 case R.id.nav_chat:
-                    selectedFragment = new ChatDisplayFragment();
-                    selectedFragment.setArguments(arguments);
+                    if(!(selectedFragment instanceof ChatDisplayFragment)) {
+                        selectedFragment = new ChatDisplayFragment();
+                        selectedFragment.setArguments(arguments);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, selectedFragment).commit();
+                    }
                     break;
             }
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, selectedFragment).commit();
-
             return true;
         }
     };
