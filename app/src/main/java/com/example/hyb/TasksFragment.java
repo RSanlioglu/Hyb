@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -18,24 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hyb.Adapter.TodoAdapter;
 import com.example.hyb.Model.Task;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.example.hyb.Repo.RepositoryCallback;
 import com.example.hyb.Repo.TasksRepository;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import java.util.List;
 
 
 public class TasksFragment extends Fragment implements TodoAdapter.OnItemClickListener {
     private String uidKey;
-    Button btnAddTodo;
+    FloatingActionButton btnAddTodo;
     private TodoAdapter todoAdapter;
     private ProgressBar progressBar;
     private TasksRepository tasksRepository;
