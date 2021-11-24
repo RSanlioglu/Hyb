@@ -46,7 +46,6 @@ public class SettingsOperationFragment extends Fragment {
     private static final String TAG = "SettingsOperationFragment";
 
     public String uidKey;
-    public Button btnLeaveResident;
     public Button btnChangeUserInfo;
     public Button btnSignOut;
     public Button btnDeleteAccount;
@@ -75,35 +74,10 @@ public class SettingsOperationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        btnLeaveResident = view.findViewById(R.id.btnLeaveResident);
         btnChangeUserInfo = view.findViewById(R.id.btnChangeUserInfo);
         btnSignOut = view.findViewById(R.id.btnSignOut);
         btnDeleteAccount = view.findViewById(R.id.btnDeleteAccount);
         btnBackToDasboard = view.findViewById(R.id.imgBackToSettings);
-
-        //OnClickListener for leave resident button
-        btnLeaveResident.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("This will remove you from the resident. If you are the only member of this resident the resident will also be deleted").setTitle("Are you sure?");
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        leaveResident();
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        //Nothing happens if they cancel
-                    }
-                });
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
 
         //OnClickListener for change userInfo button
         btnChangeUserInfo.setOnClickListener(new View.OnClickListener() {
@@ -188,8 +162,6 @@ public class SettingsOperationFragment extends Fragment {
         });
     }
 
-    //Lag en navigateToLoginRegisterRoom
-
     private void navigateOut() {
         Intent intent = new Intent(getContext(), MainActivity.class);
         intent.putExtra("UserInfo", uidKey);
@@ -248,24 +220,4 @@ public class SettingsOperationFragment extends Fragment {
             });
         });
     }
-
-/*    private void deleteChats() {
-        db.collection("chat").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for(QueryDocumentSnapshot document : task.getResult()) {
-                    Chat chat = document.toObject(Chat.class);
-                    if(chat.getSender().equals(uidKey)) {
-                        DocumentReference chatRef = db.collection("chat").document(document.getId());
-                        chatRef.delete();
-                    }
-                    if(chat.getReceiver().equals(uidKey)) {
-                        DocumentReference chatRef = db.collection("chat").document(document.getId());
-                        chatRef.delete();
-                    }
-                }
-            }
-        });
-    }*/
-
 }

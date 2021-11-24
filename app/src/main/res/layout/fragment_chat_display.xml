@@ -19,12 +19,13 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_condensed_bold"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/roboto_bold"
         android:text="Users in resident"
         android:textColor="@color/purple_500"
-        android:textSize="34sp"
+        android:textSize="24sp"
+        android:textStyle="normal"
         app:layout_constraintBottom_toTopOf="@+id/usersRecyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

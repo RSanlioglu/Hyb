@@ -41,8 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="UserName"
-            android:textSize="24sp"
-            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textStyle="normal"
             tool:layout_constraintBottom_toBottomOf="parent"
             tool:layout_constraintStart_toEndOf="@+id/imageView2"
             tool:layout_constraintTop_toTopOf="parent" />
