@@ -98,9 +98,6 @@ public class ChatActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/*                Intent intent = new Intent(v.getContext(), DashboardActivity.class);
-                intent.putExtra("UserInfo", senderUid);
-                v.getContext().startActivity(intent);*/
                 finish();
             }
         });
@@ -132,29 +129,6 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void readMessages(String senderUid, String receiverUid) {
-        /*db.collection("chat").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()) {
-                    List<Chat> chats = new ArrayList<Chat>();
-                    for(QueryDocumentSnapshot document:task.getResult()) {
-                        Chat chat = document.toObject(Chat.class);
-                        if(chat.getReceiver().equals(senderUid) && chat.getSender().equals(receiverUid) ||
-                                chat.getReceiver().equals(receiverUid) && chat.getSender().equals(senderUid)) {
-                            chats.add(chat);
-                            Log.d(TAG, "onComplete: " + chat.getMessage());
-                        }
-                    }
-
-
-                    messageAdapter = new MessageAdapter(ChatActivity.this, chats);
-                    recyclerView.setAdapter(messageAdapter);
-                } else {
-                    Log.d(TAG, "onComplete: " + task.getException());
-                }
-            }
-        });*/
-
         db.collection("chat").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
@@ -163,7 +137,6 @@ public class ChatActivity extends AppCompatActivity {
                     return;
                 }
                 List<Chat> chats = new ArrayList<Chat>();
-                List<Chat> unreadChats = new ArrayList<>();
                 for(QueryDocumentSnapshot document:value) {
                     Chat chat = document.toObject(Chat.class);
                     if (chat.getId() == null) {
@@ -172,10 +145,6 @@ public class ChatActivity extends AppCompatActivity {
                     if(chat.getReceiver().equals(senderUid) && chat.getSender().equals(receiverUid) ||
                             chat.getReceiver().equals(receiverUid) && chat.getSender().equals(senderUid)) {
                         chats.add(chat);
-                        if (!chat.isRead()) {
-                            chat.setRead(true);
-                            unreadChats.add(chat);
-                        }
                         Log.d(TAG, "onComplete: " + chat.getMessage());
                     }
                 }
@@ -193,23 +162,6 @@ public class ChatActivity extends AppCompatActivity {
                         recyclerView.setAdapter(messageAdapter);
                     }
                 });
-
-                if (!unreadChats.isEmpty()) {
-                    chatsRepository.setUpdateChats(unreadChats, new RepositoryCallback() {
-                        @Override
-                        public void onSuccess() {
-                            // Do nothing
-                        }
-
-                        @Override
-                        public void onFailure() {
-                            Toast.makeText(ChatActivity.this, "An error occurred", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-
-                //String fullReceiverName = receiverInfo.getFirstName() + " " + receiverInfo.getLastName();
-
             }
         });
 
