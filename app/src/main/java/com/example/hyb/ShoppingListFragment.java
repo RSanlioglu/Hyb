@@ -20,6 +20,7 @@ import com.example.hyb.Adapter.ShoppingAdapter;
 import com.example.hyb.Model.ShoppingItem;
 import com.example.hyb.Model.UserInfo;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -68,7 +69,7 @@ public class ShoppingListFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBarShoppinglist);
         EditText shoppingItem = view.findViewById(R.id.shoppingItemName);
         EditText shoppingItemAmountInput = view.findViewById(R.id.shoppingItemAmountInput);
-        ImageView addItemFigure = view.findViewById(R.id.addItem);
+        FloatingActionButton addItemFigure = view.findViewById(R.id.FAB_addItem);
 
 
         // onClickListener for add item figure
