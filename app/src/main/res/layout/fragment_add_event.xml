@@ -24,27 +24,49 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_event_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="404dp"
+            android:layout_height="460dp"
+            android:paddingBottom="3dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginVertical="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_add_event"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.056"
             tools:listitem="@layout/item_event_large">
 
         </androidx.recyclerview.widget.RecyclerView>
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_add_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:clickable="true"
-            android:text="@string/createEvent"
+            android:contentDescription="@string/fab_new_event"
+            android:src="@drawable/ic_add_fab"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.954"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.976" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="196dp"
+            android:text="@string/createEvent"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_add_event"
+            app:layout_constraintEnd_toStartOf="@+id/btn_add_event"
+            app:layout_constraintHorizontal_bias="0.875"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_add_event"
+            app:layout_constraintVertical_bias="0.567" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

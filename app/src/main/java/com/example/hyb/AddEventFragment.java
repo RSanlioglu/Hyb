@@ -21,6 +21,7 @@ import com.example.hyb.Model.UserInfo;
 import com.example.hyb.Repo.EventsRepository;
 import com.example.hyb.Repo.RepositoryCallback;
 import com.example.hyb.Repo.UsersRepository;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class AddEventFragment extends Fragment implements DetailedEventAdapter.O
         eventsList.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true));
         detailedEventAdapter = new DetailedEventAdapter(this);
         eventsList.setAdapter(detailedEventAdapter);
-        Button btnCreate = view.findViewById(R.id.btn_add_event);
+        FloatingActionButton btnCreate = view.findViewById(R.id.btn_add_event);
         btnCreate.setOnClickListener(v -> onCreateEventClicked());
         return view;
     }
