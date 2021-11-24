@@ -16,7 +16,7 @@
     </style>
 
     <style name="HybActionButtonOverflowDark" parent="android:Widget.Holo.Light.ActionButton.Overflow">
-        <item name="android:src">@drawable/dropdownmenu</item>
+        <item name="android:tint">@color/white</item>
         <item name="android:background">?android:attr/actionBarItemBackground</item>
         <item name="android:contentDescription">"Dropdown menu for dark theme"</item>
     </style>
