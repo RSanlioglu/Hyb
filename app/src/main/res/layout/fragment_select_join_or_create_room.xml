@@ -30,8 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
             android:text="@string/join_a_room"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textView6"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
         <Button
@@ -40,8 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/create_a_room"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btnJoinRoom"
+            app:layout_constraintStart_toStartOf="@+id/btnJoinRoom"
             app:layout_constraintTop_toBottomOf="@+id/btnJoinRoom" />
 
         <Button

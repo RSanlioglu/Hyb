@@ -31,26 +31,32 @@
         android:layout_alignParentBottom="true">
 
         <ImageView
+            android:id="@+id/chatUserInitials"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/chatUserInitials"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/txtSend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="9dp"
             android:layout_toStartOf="@+id/btnSend"
             android:background="@android:color/transparent"
-            android:hint="@string/type_your_message" />
+            android:hint="@string/type_your_message"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:textColorHint="@color/darker_gray" />
 
         <ImageButton
             android:id="@+id/btnSend"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/send" />
+            android:background="@drawable/send"
+            tools:ignore="SpeakableTextPresentCheck" />
     </RelativeLayout>
 
 </RelativeLayout>

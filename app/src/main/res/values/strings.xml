@@ -98,5 +98,6 @@
     <string name="new_task">New Task</string>
     <string name="Delete_Task_from_tasklist">image button for deleting todo items</string>
     <string name="delete_events_imageview">imageview for deleting events</string>
+    <string name="message">Message</string>
 
 </resources>

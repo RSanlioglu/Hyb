@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
-        android:text="Hyb is an android-application created as a student-project from HIOF. This application is in early release and still under development."
+        android:text="Hyb is an android-application created as a student-project from HIOF. This application is not ready for public release."
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

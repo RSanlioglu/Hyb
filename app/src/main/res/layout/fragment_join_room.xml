@@ -14,18 +14,18 @@
             android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
             android:text="@string/back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.912" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/txtResidentID"
             android:layout_width="227dp"
             android:layout_height="48dp"
+            android:layout_marginTop="32dp"
             android:autofillHints="ResidentID"
             android:background="@drawable/costume_input"
             android:ems="10"
@@ -34,48 +34,44 @@
             android:minHeight="48dp"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
-            app:layout_constraintBottom_toTopOf="@+id/btnJoin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textView4"
+            app:layout_constraintStart_toStartOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textView4"
-            app:layout_constraintVertical_bias="0.806"
             tools:ignore="TextContrastCheck" />
 
         <Button
             android:id="@+id/btnJoin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="136dp"
+            android:layout_marginTop="32dp"
             android:text="@string/join_resident"
-            app:layout_constraintBottom_toTopOf="@+id/btnBack"
             app:layout_constraintEnd_toEndOf="@+id/txtResidentID"
             app:layout_constraintHorizontal_bias="0.493"
-            app:layout_constraintStart_toStartOf="@+id/txtResidentID" />
+            app:layout_constraintStart_toStartOf="@+id/txtResidentID"
+            app:layout_constraintTop_toBottomOf="@+id/txtResidentID" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="191dp"
             android:layout_height="41dp"
+            android:layout_marginTop="100dp"
             android:text="@string/join_a_resident"
+            android:textAlignment="center"
             android:textColor="@color/purple_700"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/btnJoin"
-            app:layout_constraintEnd_toEndOf="@+id/txtResidentID"
-            app:layout_constraintHorizontal_bias="0.38"
-            app:layout_constraintStart_toStartOf="@+id/txtResidentID"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.363" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txtOutput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/btnBack"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="@+id/btnJoin"
             app:layout_constraintStart_toStartOf="@+id/btnJoin"
-            app:layout_constraintTop_toBottomOf="@+id/btnJoin"
-            app:layout_constraintVertical_bias="0.249" />
+            app:layout_constraintTop_toBottomOf="@+id/btnJoin" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
