@@ -27,7 +27,7 @@ import java.util.List;
 
 public class TasksFragment extends Fragment implements TodoAdapter.OnItemClickListener {
     private String uidKey;
-    private String residentKey; //Nøkkel for å hente brukers resident
+    private String residentKey; //Key to get resident
     FloatingActionButton btnAddTodo;
     private TodoAdapter todoAdapter;
     private ProgressBar progressBar;

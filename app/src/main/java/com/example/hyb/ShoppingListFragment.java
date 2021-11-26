@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -113,10 +112,8 @@ public class ShoppingListFragment extends Fragment {
 
     }
 
-
     // get shoppingItems for the current resident and add the to arraylist and use it for adapter
     public void showCurrentResidentsShoppinglist(View view) {
-
         // get users residentID
         DocumentReference userRef = db.collection("users").document(uidKey);
         userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -169,8 +166,4 @@ public class ShoppingListFragment extends Fragment {
 
         return newList;
     }
-
-
-
-
 }

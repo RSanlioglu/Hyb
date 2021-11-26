@@ -14,18 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hyb.Model.ShoppingItem;
 import com.example.hyb.R;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,8 +28,7 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.shoppi
     private String removedItem;
     private FirebaseFirestore db;
 
-
-    //need to thing: 1. the context we are in, so we can inflate layout 2. list with shoppingItems
+    //need two things: 1. the context we are in, so we can inflate layout 2. list with shoppingItems
     public ShoppingAdapter(Context context, List<ShoppingItem> itemList) {
         db = FirebaseFirestore.getInstance();
         this.inflater = LayoutInflater.from(context);
@@ -131,10 +122,8 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.shoppi
 
         @Override
         public void onClick(View view) {
-            switch(view.getId()){
-                case R.id.deleteShoppingItem:
-                    removeItem(position, view);
-
+            if (view.getId() == R.id.deleteShoppingItem) {
+                removeItem(position, view);
             }
         }
     }

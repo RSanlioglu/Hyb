@@ -1,7 +1,6 @@
 package com.example.hyb.Model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Resident {
     private String address;

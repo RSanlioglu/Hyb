@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         db = FirebaseFirestore.getInstance();
-
         mAuth = FirebaseAuth.getInstance();
 
         View login = findViewById(R.id.loginButton);

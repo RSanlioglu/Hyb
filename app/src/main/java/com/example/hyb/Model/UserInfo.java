@@ -3,7 +3,7 @@ package com.example.hyb.Model;
 import java.util.Date;
 
 /**
- * Model for user. Does not containt login-info since firebase auth handles that
+ * Model for user. Does not contain login-info since firebase auth handles that
  */
 public class UserInfo {
     private String Uid;

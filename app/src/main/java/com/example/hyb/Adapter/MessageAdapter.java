@@ -24,7 +24,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private List<Chat> messages;
     private Context ctx;
     private String receiverFullName;
-
     FirebaseUser user;
 
     public MessageAdapter(Context ctx, List<Chat> messages, String receiverFullName) {

@@ -10,18 +10,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hyb.Adapter.UserInfoAdpter;
+import com.example.hyb.Adapter.UserInfoAdapter;
 import com.example.hyb.Model.Event;
 import com.example.hyb.Model.UserInfo;
 import com.example.hyb.Repo.EventsRepository;
 import com.example.hyb.Repo.UsersRepository;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -35,7 +32,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private TextView description;
     private ProgressBar progressBar;
     private UsersRepository usersRepository;
-    private UserInfoAdpter userInfoAdpter;
+    private UserInfoAdapter userInfoAdpter;
     private RecyclerView attendeesList;
 
     public static void launch(Context context, String eventId) {
@@ -62,7 +59,7 @@ public class EventDetailActivity extends AppCompatActivity {
         attendeesList = findViewById(R.id.listview_event_attendees);
         attendeesList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         attendeesList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        userInfoAdpter = new UserInfoAdpter();
+        userInfoAdpter = new UserInfoAdapter();
         attendeesList.setAdapter(userInfoAdpter);
         progressBar = findViewById(R.id.progressBar5);
     }

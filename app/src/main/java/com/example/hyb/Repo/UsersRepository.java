@@ -2,7 +2,6 @@ package com.example.hyb.Repo;
 
 import androidx.annotation.NonNull;
 
-import com.example.hyb.Model.Chat;
 import com.example.hyb.Model.UserInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

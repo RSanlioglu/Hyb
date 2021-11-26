@@ -2,22 +2,18 @@ package com.example.hyb.Repo;
 
 import androidx.annotation.NonNull;
 
-import com.example.hyb.Model.Event;
 import com.example.hyb.Model.ShoppingItem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class ShoppingItemsRepository {
-    private static final String CREATED_FIELD = "created";
     public static final String RESIDENT_ID = "ResidentId";
     public static final String SHOPPING_ITEMS_COLLECTION = "shoppingItems";
     private final CollectionReference collectionReference;

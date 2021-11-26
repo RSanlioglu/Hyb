@@ -2,8 +2,6 @@ package com.example.hyb.Model;
 
 import androidx.annotation.Nullable;
 
-import com.google.firebase.firestore.IgnoreExtraProperties;
-
 public class Task {
 
 

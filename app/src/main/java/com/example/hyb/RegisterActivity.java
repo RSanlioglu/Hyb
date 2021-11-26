@@ -45,8 +45,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onClick(View arg0) {
-
-        boolean invalidPasswordDefault = false;
         boolean invalidPassword;
         EditText emailInput = findViewById(R.id.editTextEmailRegister);
         EditText passwordInput = findViewById(R.id.editTextPasswordRegister);

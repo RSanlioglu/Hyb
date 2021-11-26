@@ -7,7 +7,7 @@ public class ShoppingItem {
     private String itemId;
 
 
-    // used to receive items from firebase since residentId in not gonna display on recyclerview
+    // used to receive items from firebase since residentId is not gonna display on recyclerview
 
     public ShoppingItem(String itemAmount, String itemId) {
         this.itemAmount = itemAmount;

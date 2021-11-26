@@ -14,10 +14,10 @@ import com.google.firebase.database.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserInfoAdpter extends RecyclerView.Adapter<UserInfoAdpter.ViewHolder> {
+public class UserInfoAdapter extends RecyclerView.Adapter<UserInfoAdapter.ViewHolder> {
     private final List<UserInfo> list;
 
-    public UserInfoAdpter() {
+    public UserInfoAdapter() {
         this.list = new ArrayList<>();
     }
 
