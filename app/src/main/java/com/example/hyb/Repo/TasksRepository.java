@@ -1,17 +1,12 @@
 package com.example.hyb.Repo;
 
-import android.view.View;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 
-import com.example.hyb.AddTaskActivity;
 import com.example.hyb.Model.Task;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -24,6 +19,7 @@ public class TasksRepository {
     public static final String TODO = "todo";
     public static final String CREATED_FIELD = "created";
     public static final String COMPLETED_FIELD = "completed";
+    public static final String RESIDENT_ID = "residentId";
     private final CollectionReference collectionReference;
 
     public TasksRepository() {
@@ -31,8 +27,8 @@ public class TasksRepository {
         collectionReference = firestore.collection(TODO);
     }
 
-    public void getTasks(TasksListener tasksListener) {
-        collectionReference.orderBy(CREATED_FIELD, Query.Direction.DESCENDING).get()
+    public void getTasks(String residentId, TasksListener tasksListener) {
+        collectionReference.whereEqualTo(RESIDENT_ID, residentId).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

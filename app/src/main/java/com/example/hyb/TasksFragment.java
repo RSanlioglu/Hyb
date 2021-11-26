@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hyb.Adapter.TodoAdapter;
 import com.example.hyb.Model.Task;
+import com.example.hyb.Model.UserInfo;
 import com.example.hyb.Repo.RepositoryCallback;
 import com.example.hyb.Repo.TasksRepository;
+import com.example.hyb.Repo.UsersRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -25,16 +27,19 @@ import java.util.List;
 
 public class TasksFragment extends Fragment implements TodoAdapter.OnItemClickListener {
     private String uidKey;
+    private String residentKey; //Nøkkel for å hente brukers resident
     FloatingActionButton btnAddTodo;
     private TodoAdapter todoAdapter;
     private ProgressBar progressBar;
     private TasksRepository tasksRepository;
+    private UsersRepository usersRepository;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         uidKey = getArguments().getString("userId");
         tasksRepository = new TasksRepository();
+        usersRepository = new UsersRepository();
     }
 
     @Override
@@ -63,13 +68,25 @@ public class TasksFragment extends Fragment implements TodoAdapter.OnItemClickLi
     @Override
     public void onStart() {
         super.onStart();
-        tasksRepository.getTasks(new TasksRepository.TasksListener() {
+        usersRepository.getUserInfo(uidKey, new UsersRepository.UserInfoListener() {
             @Override
-            public void onSuccess(List<Task> tasks) {
-                progressBar.setVisibility(View.GONE);
-                todoAdapter.addTasks(tasks);
-            }
+            public void onSuccess(List<UserInfo> userInfos) {
+                //use this to filter events just for current users resident
+                UserInfo userInfo = userInfos.get(0);
+                residentKey = userInfo.getResidentId();
+                tasksRepository.getTasks(residentKey ,new TasksRepository.TasksListener() {
+                    @Override
+                    public void onSuccess(List<Task> tasks) {
+                        progressBar.setVisibility(View.GONE);
+                        todoAdapter.addTasks(tasks);
+                    }
 
+                    @Override
+                    public void onFailure() {
+                        showErrorMessage();
+                    }
+                });
+            }
             @Override
             public void onFailure() {
                 showErrorMessage();

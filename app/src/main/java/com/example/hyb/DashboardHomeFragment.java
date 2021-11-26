@@ -101,32 +101,6 @@ public class DashboardHomeFragment extends Fragment implements NotificationsAdap
     }
 
     /**
-     * Function for updating user-interface after user is sendt here from register/login
-     * @param view - View from onViewCreated function
-     */
-//    private void updateUi(View view) {
-//        // TODO: 27/10/2021 show residentEvents in recycler view with mak 5 events.
-//
-//        ListView listView = (ListView) view.findViewById(R.id.listEvents);
-//
-//        //Mock liste med eventer. Byttes ut med event-objekter senere
-//        String[] events = new String[] {
-//                "Event 1",
-//                "Event 2",
-//                "Event 3",
-//                "Event 4",
-//                "Event 5"
-//        };
-//
-//        List<String> events_list = new ArrayList<String>(Arrays.asList(events));
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-//                getContext(), android.R.layout.simple_expandable_list_item_1, events_list
-//        );
-//        listView.setAdapter(arrayAdapter);
-//        arrayAdapter.notifyDataSetChanged();
-//    }
-
-    /**
      * Private function for getting initials from users full name
      * @param fullName - String of full name
      * @return Initials
@@ -163,28 +137,10 @@ public class DashboardHomeFragment extends Fragment implements NotificationsAdap
                 showErrorMessage();
             }
         });
-
-//        // Retrieve multiple Events using QuerySnapshot and filter them based on the current users residentKey
-//        db.collection("events").whereEqualTo("eventResident",residentKey)
-//                .get()
-//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//
-//                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-//
-//                            Event event = documentSnapshot.toObject(Event.class);
-//                            String title = event.getEventTitle();
-//                            //add relevant events title to arraylist
-//                            residentEvents.add(title);
-//                        }
-//
-//                    }
-//                });
     }
 
     private void fetchTasks() {
-        tasksRepository.getTasks(new TasksRepository.TasksListener() {
+        tasksRepository.getTasks(residentKey, new TasksRepository.TasksListener() {
             @Override
             public void onSuccess(List<Task> tasks) {
                 if (!tasks.isEmpty()) {

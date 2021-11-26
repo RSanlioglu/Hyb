@@ -47,6 +47,16 @@ public class DashboardActivity extends AppCompatActivity {
 
         //The default fragment is the dashboardHomeFragment
         Fragment startFragment = new DashboardHomeFragment();
+
+        int intentFragment = getIntent().getExtras().getInt("frgmnt");
+        if (intentFragment == 1) {
+            Bundle args = new Bundle();
+            args.putString("userId", userUid);
+            startFragment = new TasksFragment();
+            startFragment.setArguments(args);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, startFragment).commit();
+            bottomNav.setSelectedItemId(R.id.nav_task);
+        }
         Bundle arguments = new Bundle();
         arguments.putString("userId", userUid);
         startFragment.setArguments(arguments);

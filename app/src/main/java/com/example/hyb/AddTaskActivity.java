@@ -1,5 +1,6 @@
 package com.example.hyb;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -7,19 +8,17 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hyb.Model.Task;
+import com.example.hyb.Model.UserInfo;
 import com.example.hyb.Repo.RepositoryCallback;
 import com.example.hyb.Repo.TasksRepository;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.textfield.TextInputLayout;
-import com.example.hyb.Model.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Objects;
-import java.util.UUID;
 
 public class AddTaskActivity extends AppCompatActivity {
     public final String TAG = "AddTaskActivity";
@@ -28,6 +27,8 @@ public class AddTaskActivity extends AppCompatActivity {
     EditText textDescription;
     private ProgressBar progressBar;
     private TasksRepository tasksRepository;
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,8 @@ public class AddTaskActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar2);
         btnAdd.setOnClickListener(view -> onAddTaskClicked());
         tasksRepository = new TasksRepository();
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
     }
 
     private void onAddTaskClicked() {
@@ -51,23 +54,37 @@ public class AddTaskActivity extends AppCompatActivity {
             return;
         }
 
-        Task t = new Task();
-        t.setDescription(description);
-        t.setTitle(title);
-        t.setCompleted(false);
-        t.setCreated(System.currentTimeMillis());
-        progressBar.setVisibility(View.VISIBLE);
-        tasksRepository.saveTask(t, new RepositoryCallback() {
+        DocumentReference ref = db.collection("users").document(auth.getCurrentUser().getUid());
+        ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess() {
-                progressBar.setVisibility(View.GONE);
-                finish();
-            }
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                UserInfo user = documentSnapshot.toObject(UserInfo.class);
 
-            @Override
-            public void onFailure() {
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(AddTaskActivity.this, "An error occurred", Toast.LENGTH_SHORT).show();
+                Task t = new Task();
+                t.setDescription(description);
+                t.setTitle(title);
+                t.setCompleted(false);
+                t.setCreated(System.currentTimeMillis());
+                t.setResidentId(user.getResidentId());
+                progressBar.setVisibility(View.VISIBLE);
+                tasksRepository.saveTask(t, new RepositoryCallback() {
+                    @Override
+                    public void onSuccess() {
+                        progressBar.setVisibility(View.GONE);
+                        finish();
+                        Intent intentSettings = new Intent(getBaseContext(), DashboardActivity.class);
+                        intentSettings.putExtra("UserInfo", auth.getCurrentUser().getUid());
+                        intentSettings.putExtra("frgmnt", 1);
+                        intentSettings.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        getBaseContext().startActivity(intentSettings);
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(AddTaskActivity.this, "An error occurred", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }
