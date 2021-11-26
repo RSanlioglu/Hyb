@@ -6,9 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,8 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hyb.Adapter.MessageAdapter;
 import com.example.hyb.Model.Chat;
 import com.example.hyb.Model.UserInfo;
-import com.example.hyb.Repo.ChatsRepository;
-import com.example.hyb.Repo.RepositoryCallback;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -55,14 +51,12 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     ImageButton backButton;
-    private ChatsRepository chatsRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         db = FirebaseFirestore.getInstance();
-        chatsRepository = new ChatsRepository();
 
         intent = getIntent();
         receiverUid = intent.getStringExtra("receiverUid");
@@ -145,6 +139,15 @@ public class ChatActivity extends AppCompatActivity {
                     if(chat.getReceiver().equals(senderUid) && chat.getSender().equals(receiverUid) ||
                             chat.getReceiver().equals(receiverUid) && chat.getSender().equals(senderUid)) {
                         chats.add(chat);
+                        if(chat.getSender().equals(receiverUid)) {
+                            DocumentReference chatRef = db.collection("chat").document(document.getId());
+                            chatRef.update("read", true).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d(TAG, "onSuccess: Chat read");
+                                }
+                            });
+                        }
                         Log.d(TAG, "onComplete: " + chat.getMessage());
                     }
                 }
