@@ -8,11 +8,12 @@ public class Chat implements Comparable<Chat>{
     private String sentDate;
     private boolean isRead;
 
-    public Chat(String sender, String receiver, String message, String sentDate) {
+    public Chat(String sender, String receiver, String message, String sentDate, boolean isRead) {
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
         this.sentDate = sentDate;
+        this.isRead = isRead;
     }
 
     public Chat() {

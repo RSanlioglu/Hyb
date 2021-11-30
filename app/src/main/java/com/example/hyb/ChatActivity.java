@@ -116,7 +116,7 @@ public class ChatActivity extends AppCompatActivity {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
 
-        Chat createdChat = new Chat(sender, recevier, message, dtf.format(now));
+        Chat createdChat = new Chat(sender, recevier, message, dtf.format(now), false);
         createdChat.setId(UUID.randomUUID().toString());
         db.collection("chat").document().set(createdChat);
         readMessages(senderUid, receiverUid);
