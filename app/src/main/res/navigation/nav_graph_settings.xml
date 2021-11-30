@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/settingsOperationFragment"
-        android:name="com.example.hyb.HybSettingsActivity.SettingsOperationFragment"
+        android:name="com.example.hyb.SettingsOperationFragment"
         android:label="fragment_settings_operation"
         tools:layout="@layout/fragment_settings_operation" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/changeUserInfoFragment"
-        android:name="com.example.hyb.HybSettingsActivity.ChangeUserInfoFragment"
+        android:name="com.example.hyb.ChangeUserInfoFragment"
         android:label="fragment_change_user_info"
         tools:layout="@layout/fragment_change_user_info" >
         <action

@@ -1,4 +1,4 @@
-package com.example.hyb.HybSettingsActivity;
+package com.example.hyb;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,10 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuCompat;
 
-import com.example.hyb.MainActivity;
 import com.example.hyb.Model.Resident;
 import com.example.hyb.Model.UserInfo;
-import com.example.hyb.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;

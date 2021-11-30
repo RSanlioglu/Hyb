@@ -23,6 +23,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -51,6 +52,7 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     ImageButton backButton;
+    ListenerRegistration listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +95,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                listener.remove();
             }
         });
 
@@ -123,7 +126,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void readMessages(String senderUid, String receiverUid) {
-        db.collection("chat").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        listener = db.collection("chat").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
                 if(e != null) {
@@ -170,6 +173,9 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        listener.remove();
+    }
 }

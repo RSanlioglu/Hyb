@@ -1,4 +1,4 @@
-package com.example.hyb.HybSettingsActivity;
+package com.example.hyb;
 
 import android.content.Intent;
 import android.os.Bundle;

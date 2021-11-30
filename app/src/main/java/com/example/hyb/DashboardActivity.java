@@ -15,7 +15,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.hyb.HybSettingsActivity.SettingsActivity;
 import com.example.hyb.Model.Resident;
 import com.example.hyb.Model.UserInfo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
